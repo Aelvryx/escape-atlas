@@ -1,11 +1,21 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-14T16:09:23.000Z",
+  "generatedAt": "2026-08-02T14:27:13.966Z",
   "source": "Fastmail calendar (public-safe derived snapshot)",
   "window": {
-    "start": "2026-07-13T09:42:00+01:00",
+    "start": "2026-08-02T00:00:00+01:00",
     "end": "2027-12-31T23:59:59+00:00"
   },
   "eventConvention": "Escape room — <game> @ <venue>",
-  "events": []
+  "events": [
+    {
+      "id": "2026-08-09-mary-s-curse-escape-reading",
+      "date": "2026-08-09",
+      "time": "10:30",
+      "location": "Escape Reading, 106A Friar Street, Reading, RG1 1EP",
+      "venue": "Escape Reading",
+      "game": "Mary’s Curse",
+      "note": null
+    }
+  ]
 }
