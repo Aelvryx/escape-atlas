@@ -17,6 +17,9 @@ multi-user product.
 - `/venues/` is the first discovery surface. It groups 162 named-room records
   into 82 normalized operator histories, supports operator/location/game search,
   and generates a durable page for every known operator.
+- `/locations/` makes discovery place-first. It generates a durable history for
+  all 56 recorded towns and cities, exposes operator and multi-room-day density,
+  and lets a visitor assemble a four-stop route encoded in a shareable URL.
 
 ## Data mapping
 

@@ -1,0 +1,307 @@
+---
+import LocationCard from '../../components/LocationCard.astro';
+import StatCard from '../../components/StatCard.astro';
+import Base from '../../layouts/Base.astro';
+import { locationProfiles } from '../../lib/locations';
+
+const repeatLocations = locationProfiles.filter((location) => location.visitDays.length > 1).length;
+const multiOperatorLocations = locationProfiles.filter((location) => location.operators.length > 1).length;
+const provenMultiRoomDays = locationProfiles.filter((location) => location.busiestDay.rooms.length > 1).length;
+---
+
+<Base
+  title="Locations"
+  description={`Explore ${locationProfiles.length} places through Anthony and Trenna's completed escape-room history and build a shareable multi-stop route.`}
+  eyebrow="Location atlas"
+>
+  <header class="page-header location-directory-header">
+    <h1>Plan from places, not lists.</h1>
+    <p class="lede">Explore every town and city in the atlas, see the operators and room density we actually found there, then assemble a shareable route from proven stops.</p>
+  </header>
+
+  <section class="stats-grid location-directory-stats" aria-label="Location directory summary">
+    <StatCard value={locationProfiles.length} label="places explored" detail="towns, cities and one trip abroad" />
+    <StatCard value={repeatLocations} label="places revisited" detail="recorded on more than one day" />
+    <StatCard value={multiOperatorLocations} label="operator clusters" detail="more than one known operator" />
+    <StatCard value={provenMultiRoomDays} label="multi-room stops" detail="two or more rooms in one day" />
+  </section>
+
+  <section class="section trip-planner" id="trip-planner" aria-labelledby="trip-planner-heading">
+    <div class="trip-planner__intro">
+      <div>
+        <p class="eyebrow">Build a route</p>
+        <h2 id="trip-planner-heading">A trip board grounded in real history.</h2>
+      </div>
+      <p>Choose up to four stops in route order. The board shows proven room density and operator choice; it does not invent live availability.</p>
+    </div>
+
+    <div class="trip-board">
+      <div class="trip-board__empty" id="trip-empty">
+        <span aria-hidden="true">⌖</span>
+        <div>
+          <strong>No stops pinned yet.</strong>
+          <p>Add places from the directory below. Your route is stored in the URL, ready to share.</p>
+        </div>
+      </div>
+      <ol class="trip-stops" id="trip-stops" aria-label="Selected trip stops"></ol>
+      <div class="trip-board__footer">
+        <p id="trip-feedback" aria-live="polite">Choose a first stop to begin.</p>
+        <div>
+          <button class="button button--ghost" id="trip-clear" type="button" disabled>Clear route</button>
+          <button class="button" id="trip-copy" type="button" disabled>Copy route link</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="location-list-heading">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Pick the coordinates</p>
+        <h2 id="location-list-heading">Explore every stop.</h2>
+      </div>
+      <p>Search the full history, focus on denser destinations and sort by the signal that matters to your trip.</p>
+    </div>
+
+    <div class="filters location-filters">
+      <label>
+        Search
+        <input id="location-search" type="search" placeholder="Place, operator or room…" autocomplete="off" />
+      </label>
+      <label>
+        Minimum history
+        <select id="location-minimum">
+          <option value="0">Any stop</option>
+          <option value="2">2+ rooms</option>
+          <option value="5">5+ rooms</option>
+        </select>
+      </label>
+      <label>
+        Sort by
+        <select id="location-sort">
+          <option value="rooms">Most rooms</option>
+          <option value="operators">Operator choice</option>
+          <option value="latest">Latest visit</option>
+          <option value="name">A–Z</option>
+        </select>
+      </label>
+    </div>
+
+    <p class="results-line" id="location-count">Showing all {locationProfiles.length} locations</p>
+
+    <div class="location-grid" id="location-grid">
+      {locationProfiles.map((location) => (
+        <div
+          data-location-item
+          data-search={[
+            location.name,
+            ...location.operators.map((operator) => operator.venue.name),
+            ...location.rooms.map((room) => room.game),
+          ].filter(Boolean).join(' ').toLowerCase()}
+          data-rooms={location.visits}
+          data-operators={location.operators.length}
+          data-latest={location.latestVisit.date}
+          data-name={location.name}
+        >
+          <LocationCard location={location} planner />
+        </div>
+      ))}
+    </div>
+
+    <div class="empty-state" id="location-empty" hidden>
+      <h2>No stop at those coordinates.</h2>
+      <p>Try a broader search or lower the minimum history.</p>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const search = document.querySelector<HTMLInputElement>('#location-search');
+  const minimum = document.querySelector<HTMLSelectElement>('#location-minimum');
+  const sort = document.querySelector<HTMLSelectElement>('#location-sort');
+  const count = document.querySelector<HTMLElement>('#location-count');
+  const empty = document.querySelector<HTMLElement>('#location-empty');
+  const grid = document.querySelector<HTMLElement>('#location-grid');
+  const items = [...document.querySelectorAll<HTMLElement>('[data-location-item]')];
+
+  function numberValue(item: HTMLElement, key: 'rooms' | 'operators'): number {
+    return Number(item.dataset[key] ?? 0);
+  }
+
+  function applyFilters(updateAddress = true) {
+    const query = search?.value.trim().toLowerCase() ?? '';
+    const minimumRooms = Number(minimum?.value ?? 0);
+    const sortBy = sort?.value ?? 'rooms';
+    let visible = 0;
+
+    const ordered = [...items].sort((a, b) => {
+      if (sortBy === 'operators') {
+        return numberValue(b, 'operators') - numberValue(a, 'operators')
+          || numberValue(b, 'rooms') - numberValue(a, 'rooms');
+      }
+      if (sortBy === 'latest') return (b.dataset.latest ?? '').localeCompare(a.dataset.latest ?? '');
+      if (sortBy === 'name') return (a.dataset.name ?? '').localeCompare(b.dataset.name ?? '');
+      return numberValue(b, 'rooms') - numberValue(a, 'rooms')
+        || numberValue(b, 'operators') - numberValue(a, 'operators');
+    });
+
+    for (const item of ordered) {
+      const matches = (!query || item.dataset.search?.includes(query))
+        && numberValue(item, 'rooms') >= minimumRooms;
+      item.hidden = !matches;
+      if (matches) visible += 1;
+      grid?.append(item);
+    }
+
+    if (count) count.textContent = visible === items.length
+      ? `Showing all ${visible} locations`
+      : `Showing ${visible} of ${items.length} locations`;
+    if (empty) empty.hidden = visible !== 0;
+
+    if (updateAddress) {
+      const address = new URL(window.location.href);
+      query ? address.searchParams.set('q', query) : address.searchParams.delete('q');
+      minimumRooms ? address.searchParams.set('min', String(minimumRooms)) : address.searchParams.delete('min');
+      sortBy !== 'rooms' ? address.searchParams.set('sort', sortBy) : address.searchParams.delete('sort');
+      window.history.replaceState({}, '', address);
+    }
+  }
+
+  const initial = new URLSearchParams(window.location.search);
+  if (search) search.value = initial.get('q') ?? '';
+  if (minimum && ['0', '2', '5'].includes(initial.get('min') ?? '0')) minimum.value = initial.get('min') ?? '0';
+  if (sort && ['rooms', 'operators', 'latest', 'name'].includes(initial.get('sort') ?? 'rooms')) sort.value = initial.get('sort') ?? 'rooms';
+  applyFilters(false);
+
+  search?.addEventListener('input', () => applyFilters());
+  minimum?.addEventListener('change', () => applyFilters());
+  sort?.addEventListener('change', () => applyFilters());
+
+  const profileElements = [...document.querySelectorAll<HTMLElement>('[data-location-profile]')];
+  const profiles = new Map(profileElements.map((profile) => [profile.dataset.locationSlug ?? '', profile]));
+  const addButtons = [...document.querySelectorAll<HTMLButtonElement>('[data-trip-add]')];
+  const stopList = document.querySelector<HTMLOListElement>('#trip-stops');
+  const tripEmpty = document.querySelector<HTMLElement>('#trip-empty');
+  const tripFeedback = document.querySelector<HTMLElement>('#trip-feedback');
+  const copyButton = document.querySelector<HTMLButtonElement>('#trip-copy');
+  const clearButton = document.querySelector<HTMLButtonElement>('#trip-clear');
+  let selectedStops = [...new Set((initial.get('trip') ?? '').split(',').filter((slug) => profiles.has(slug)))].slice(0, 4);
+
+  function button(label: string, action: string, slug: string, disabled = false): HTMLButtonElement {
+    const control = document.createElement('button');
+    control.type = 'button';
+    control.className = 'trip-stop__control';
+    control.textContent = label;
+    control.dataset.tripAction = action;
+    control.dataset.tripSlug = slug;
+    control.disabled = disabled;
+    return control;
+  }
+
+  function renderTrip(updateAddress = true) {
+    stopList?.replaceChildren();
+
+    selectedStops.forEach((slug, index) => {
+      const profile = profiles.get(slug);
+      if (!profile || !stopList) return;
+
+      const item = document.createElement('li');
+      item.className = 'trip-stop';
+
+      const sequence = document.createElement('span');
+      sequence.className = 'trip-stop__sequence';
+      sequence.textContent = String(index + 1).padStart(2, '0');
+
+      const copy = document.createElement('div');
+      const title = document.createElement('h3');
+      const link = document.createElement('a');
+      link.href = `/location/${slug}/`;
+      link.textContent = profile.dataset.locationName ?? slug;
+      title.append(link);
+
+      const detail = document.createElement('p');
+      const rooms = Number(profile.dataset.locationRooms ?? 0);
+      const operators = Number(profile.dataset.locationOperators ?? 0);
+      const busiest = Number(profile.dataset.locationBusiest ?? 0);
+      detail.textContent = `${rooms} ${rooms === 1 ? 'room' : 'rooms'} · ${operators} ${operators === 1 ? 'operator' : 'operators'} · up to ${busiest} ${busiest === 1 ? 'room' : 'rooms'} in a recorded day`;
+      copy.append(title, detail);
+
+      const controls = document.createElement('div');
+      controls.className = 'trip-stop__controls';
+      controls.append(
+        button('↑', 'up', slug, index === 0),
+        button('↓', 'down', slug, index === selectedStops.length - 1),
+        button('Remove', 'remove', slug),
+      );
+
+      item.append(sequence, copy, controls);
+      stopList.append(item);
+    });
+
+    const hasStops = selectedStops.length > 0;
+    if (tripEmpty) tripEmpty.hidden = hasStops;
+    if (copyButton) copyButton.disabled = !hasStops;
+    if (clearButton) clearButton.disabled = !hasStops;
+    if (tripFeedback) tripFeedback.textContent = hasStops
+      ? `${selectedStops.length} of 4 stops pinned in route order.`
+      : 'Choose a first stop to begin.';
+
+    for (const addButton of addButtons) {
+      const slug = addButton.dataset.tripAdd ?? '';
+      const selected = selectedStops.includes(slug);
+      addButton.disabled = selected || selectedStops.length >= 4;
+      addButton.setAttribute('aria-pressed', String(selected));
+      addButton.textContent = selected ? '✓ Added' : selectedStops.length >= 4 ? 'Route full' : '+ Add stop';
+    }
+
+    if (updateAddress) {
+      const address = new URL(window.location.href);
+      selectedStops.length
+        ? address.searchParams.set('trip', selectedStops.join(','))
+        : address.searchParams.delete('trip');
+      window.history.replaceState({}, '', address);
+    }
+  }
+
+  for (const addButton of addButtons) {
+    addButton.addEventListener('click', () => {
+      const slug = addButton.dataset.tripAdd ?? '';
+      if (!profiles.has(slug) || selectedStops.includes(slug) || selectedStops.length >= 4) return;
+      selectedStops.push(slug);
+      renderTrip();
+    });
+  }
+
+  stopList?.addEventListener('click', (event) => {
+    const control = (event.target as HTMLElement).closest<HTMLButtonElement>('[data-trip-action]');
+    if (!control) return;
+    const slug = control.dataset.tripSlug ?? '';
+    const index = selectedStops.indexOf(slug);
+    if (index < 0) return;
+
+    if (control.dataset.tripAction === 'remove') selectedStops.splice(index, 1);
+    if (control.dataset.tripAction === 'up' && index > 0) {
+      [selectedStops[index - 1], selectedStops[index]] = [selectedStops[index], selectedStops[index - 1]];
+    }
+    if (control.dataset.tripAction === 'down' && index < selectedStops.length - 1) {
+      [selectedStops[index + 1], selectedStops[index]] = [selectedStops[index], selectedStops[index + 1]];
+    }
+    renderTrip();
+  });
+
+  clearButton?.addEventListener('click', () => {
+    selectedStops = [];
+    renderTrip();
+  });
+
+  copyButton?.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      if (tripFeedback) tripFeedback.textContent = 'Route link copied.';
+    } catch {
+      if (tripFeedback) tripFeedback.textContent = 'Copy was unavailable; the route is already encoded in the address bar.';
+    }
+  });
+
+  renderTrip(false);
+</script>

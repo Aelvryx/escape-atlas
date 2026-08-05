@@ -43,7 +43,7 @@ const locationDescription = locationNames.length === 1
       <p class="lede">We have logged {venue.visits} {venue.visits === 1 ? 'room' : 'rooms'} with this operator, from {formatDate(venue.firstVisit.date)} to {formatDate(venue.latestVisit.date)}.</p>
       <div class="location-pills" aria-label="Locations visited">
         {venue.locations.map((location) => (
-          <a href={`/venues/?location=${slugify(location.label)}`}>
+          <a href={`/location/${slugify(location.label)}/`}>
             {location.label}<span>{location.count}</span>
           </a>
         ))}

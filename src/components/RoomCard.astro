@@ -1,6 +1,6 @@
 ---
 import type { Room } from '../lib/rooms';
-import { formatDate, formatDuration, roomSlug, roomTitle } from '../lib/rooms';
+import { formatDate, formatDuration, roomSlug, roomTitle, slugify } from '../lib/rooms';
 import { venueProfileForRoom } from '../lib/venues';
 
 interface Props {
@@ -17,7 +17,7 @@ const venue = venueProfileForRoom(room);
   <div class="room-card__body">
     <div class="room-card__meta">
       <time datetime={room.date}>{formatDate(room.date)}</time>
-      <span>{room.location}</span>
+      <span><a href={`/location/${slugify(room.location)}/`}>{room.location}</a></span>
     </div>
     <h3><a href={`/room/${roomSlug(room)}/`}>{roomTitle(room)}</a></h3>
     <p class="room-card__venue">
