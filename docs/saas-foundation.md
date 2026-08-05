@@ -52,6 +52,19 @@ The RPC derives ownership from `auth.uid()`, creates or updates venues and
 rooms, and upserts visits by a stable CSV fingerprint. The complete batch runs
 inside one PostgreSQL transaction: either every valid row is saved or none is.
 
+## Canonical history reconciliation
+
+`npm run migration:canonical` turns the authoritative 164-room JSON history
+into a validated CSV, the exact normalized RPC payload, and a reconciliation
+manifest. The manifest records source/artifact hashes, every stable import
+fingerprint, all ten explicit placeholders for missing legacy names, and the
+expected database shape: 164 visits, 95 venue/location identities, 164 room
+identities, 157 timed visits, five public notes and no invented outcomes.
+
+`npm run migration:verify` is part of the normal check pipeline. CI also sends
+the full 164-row payload through `import_visits` twice against PostgreSQL 17 and
+asserts the exact expected counts, date range and idempotency.
+
 ## Environment
 
 Copy `.env.example` and provide:

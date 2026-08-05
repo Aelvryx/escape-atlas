@@ -1,0 +1,1068 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "label": "Escape Atlas canonical history",
+    "reference": "memory/reference/escape-rooms.md",
+    "referenceUpdated": "2026-07-11",
+    "workbook": "trenna-escape-rooms-2026-07-11.xlsx",
+    "workbookSha256": "0513e77c0c6cd367cc71ce1f2f60799594ac27066bfe0898a3f5fcdffdd97f28",
+    "migrationRecordCount": 159,
+    "recordCount": 164,
+    "updated": "2026-07-15",
+    "sha256": "84ad966c9849b02ac9bc33f1032ac60c1d5ea81cd4ce1f59a4b723b09005ac5f"
+  },
+  "expected": {
+    "visits": 164,
+    "venues": 95,
+    "rooms": 164,
+    "timedVisits": 157,
+    "publicNotes": 5,
+    "unknownOutcomes": 164,
+    "uniqueSourceRefs": 164,
+    "firstPlayedOn": "2015-11-28",
+    "lastPlayedOn": "2026-07-13"
+  },
+  "substitutions": [
+    {
+      "sourceId": 1,
+      "field": "game",
+      "value": "Historic room #001 — name unknown"
+    },
+    {
+      "sourceId": 2,
+      "field": "game",
+      "value": "Historic room #002 — name unknown"
+    },
+    {
+      "sourceId": 3,
+      "field": "game",
+      "value": "Historic room #003 — name unknown"
+    },
+    {
+      "sourceId": 4,
+      "field": "game",
+      "value": "Historic room #004 — name unknown"
+    },
+    {
+      "sourceId": 5,
+      "field": "game",
+      "value": "Historic room #005 — name unknown"
+    },
+    {
+      "sourceId": 6,
+      "field": "game",
+      "value": "Historic room #006 — name unknown"
+    },
+    {
+      "sourceId": 54,
+      "field": "game",
+      "value": "Historic room #054 — name unknown"
+    },
+    {
+      "sourceId": 55,
+      "field": "game",
+      "value": "Historic room #055 — name unknown"
+    },
+    {
+      "sourceId": 95,
+      "field": "venue",
+      "value": "Unknown venue · Newport"
+    },
+    {
+      "sourceId": 117,
+      "field": "venue",
+      "value": "Unknown venue · Leamington"
+    }
+  ],
+  "artifacts": {
+    "csvSha256": "ba1a6868d1058275632041cef77966de29bd8c2f081dc1d569bd5946bc4d4e4a",
+    "payloadSha256": "fd740cff50255dd1f0517267fd53f3645e097ea7721a786e7800d86ce8f1763a",
+    "sqlSha256": "d991936d45f93efe8358afb51d787c69a9e58e5d66792969d9e2e614ee347c68"
+  },
+  "rows": [
+    {
+      "sourceId": 1,
+      "sourceRef": "csv:v1:57bf0bd7db7247fad1c7c21470422e38f246b42c44da0c34187ed6923148e0b1",
+      "venueSlug": "the-cyantist-bournemouth-03qk3l7",
+      "roomSlug": "historic-room-001-name-unknown-0a6gjfy"
+    },
+    {
+      "sourceId": 2,
+      "sourceRef": "csv:v1:51db5635d892aa87ecb2825c4276a0a9562205208d0c3e80a17189f739b53add",
+      "venueSlug": "a-curious-escape-fareham-1y7n33v",
+      "roomSlug": "historic-room-002-name-unknown-02rc2kx"
+    },
+    {
+      "sourceId": 3,
+      "sourceRef": "csv:v1:50a60abc63117eee1b0fca35721bf5ba5e8fdbba4038a204329ced83f9f9b242",
+      "venueSlug": "salisbury-escape-rooms-salisbury-08xd26i",
+      "roomSlug": "historic-room-003-name-unknown-03ie2uo"
+    },
+    {
+      "sourceId": 4,
+      "sourceRef": "csv:v1:6afa126a110786d01dd0cd52a28cfb52cdeff98e00f6eec429bf562ffb11590b",
+      "venueSlug": "enigma-escape-london-0jewp3v",
+      "roomSlug": "historic-room-004-name-unknown-1o86z5n"
+    },
+    {
+      "sourceId": 5,
+      "sourceRef": "csv:v1:eaff5088637980f8486220d3acd86e52bad240d1bab8d19be93825ba41fa9efc",
+      "venueSlug": "the-cyantist-southampton-1ooo4mh",
+      "roomSlug": "historic-room-005-name-unknown-0x1n36a"
+    },
+    {
+      "sourceId": 6,
+      "sourceRef": "csv:v1:32611f1c95dfafb90561de04021b8114fffedbce6199f7ee76cbf89f0a5115cf",
+      "venueSlug": "salisbury-escape-rooms-salisbury-08xd26i",
+      "roomSlug": "historic-room-006-name-unknown-1hrysth"
+    },
+    {
+      "sourceId": 7,
+      "sourceRef": "csv:v1:e3ff8d72a7eb17148151a6f60b38c3e1c5f30248f7f5511b8ceefb9564529b84",
+      "venueSlug": "the-real-escape-portsmouth-1vhpxxa",
+      "roomSlug": "the-guardians-of-the-elixir-03nunp9"
+    },
+    {
+      "sourceId": 8,
+      "sourceRef": "csv:v1:bcee9b7d368773493c98766db995ca1f6dbf0b774a53c965bf308eef62be4ca2",
+      "venueSlug": "escape-game-brighton-0hwlbxl",
+      "roomSlug": "return-of-the-mad-scientist-0qx6v03"
+    },
+    {
+      "sourceId": 9,
+      "sourceRef": "csv:v1:e6f6f4a9e5de3dd3e43a355142d65b428c1ac4d6cf1adf52c9ab1a985164d255",
+      "venueSlug": "escape-rooms-master-basel-0uslejb",
+      "roomSlug": "the-curse-of-yama-0il7lop"
+    },
+    {
+      "sourceId": 10,
+      "sourceRef": "csv:v1:9a436d296a0262a9a54aa45de0f642c2b1753f6c69ab367bd21705368885f9f0",
+      "venueSlug": "escape-dungeons-weymouth-0trzdx1",
+      "roomSlug": "prison-break-19rpup5"
+    },
+    {
+      "sourceId": 11,
+      "sourceRef": "csv:v1:d6d8991ff69a7cdd05b3014f42c19c92eef6adaebccf935ee4cd2799fb122708",
+      "venueSlug": "red-house-mysteries-exeter-15kqli0",
+      "roomSlug": "the-scarlet-room-0ubtg69"
+    },
+    {
+      "sourceId": 12,
+      "sourceRef": "csv:v1:ed7c81baeadeb74e194f10e346c793272f902600e3608c1035605e981a72c2e4",
+      "venueSlug": "houdini-s-escape-room-southampton-08837ej",
+      "roomSlug": "escape-from-alcatraz-0icwpee"
+    },
+    {
+      "sourceId": 13,
+      "sourceRef": "csv:v1:660aab580c512335b8d3d6786f512ae77d731c46e92fade98dda0711cf138bc3",
+      "venueSlug": "co-decode-swindon-0nks76y",
+      "roomSlug": "professor-dunstan-1ed9h4d"
+    },
+    {
+      "sourceId": 14,
+      "sourceRef": "csv:v1:386475006ff2b39584b252d906214373726bf67b697b8d05d1d58d9eb36bc808",
+      "venueSlug": "elusion-southampton-0235y80",
+      "roomSlug": "pandora-heist-0kg1hpl"
+    },
+    {
+      "sourceId": 15,
+      "sourceRef": "csv:v1:c03fa82c03b05fb52e471d273017481c6e2e8cd895a376cb14392f1b2dfb72fe",
+      "venueSlug": "the-real-escape-portsmouth-1vhpxxa",
+      "roomSlug": "dr-ryddles-memories-1l4pxb7"
+    },
+    {
+      "sourceId": 16,
+      "sourceRef": "csv:v1:9c136500b55477ce4e44af9217ca5ca0ad4cc6ad8cbe094ab9117f8047905bd8",
+      "venueSlug": "salisbury-escape-rooms-salisbury-08xd26i",
+      "roomSlug": "corruption-at-the-heart-of-wscs-0gdc6rl"
+    },
+    {
+      "sourceId": 17,
+      "sourceRef": "csv:v1:2b8ee4f475d35ad7f4f7b217dcb3afad2499915bf5ec3b541c1553d2ca88a801",
+      "venueSlug": "other-world-escapes-southampton-1rahln3",
+      "roomSlug": "mayan-1cciiwh"
+    },
+    {
+      "sourceId": 18,
+      "sourceRef": "csv:v1:13e316001b24cec69818c516ada4b7a5b7c0514b192e1b9a4820cc813cc37209",
+      "venueSlug": "exciting-escapes-basingstoke-0pxlooy",
+      "roomSlug": "a-hidden-past-0wqtp8k"
+    },
+    {
+      "sourceId": 19,
+      "sourceRef": "csv:v1:5f88c47d37c4a7c23cc5f4720e2d5b5cbfdeb81d04af838693f64fafa0020076",
+      "venueSlug": "tulleys-crawley-1wqbxnk",
+      "roomSlug": "mutiny-1bxt1g9"
+    },
+    {
+      "sourceId": 20,
+      "sourceRef": "csv:v1:d543c55da72e2fe0325779804bd7859a8bb868cf3d029ec387afcf1eeab2db66",
+      "venueSlug": "tulleys-crawley-1wqbxnk",
+      "roomSlug": "the-outfitters-071nqwz"
+    },
+    {
+      "sourceId": 21,
+      "sourceRef": "csv:v1:6ac37170f483acb163e74851b5a35bef123dec2af625be341c70da82c8265cbd",
+      "venueSlug": "other-world-escapes-southampton-1rahln3",
+      "roomSlug": "vermillion-clubs-10ygmmb"
+    },
+    {
+      "sourceId": 22,
+      "sourceRef": "csv:v1:2ca762f33ff7787ab63f51602710d2f7c26d6bdb2748efb48bd34dfde1bddb6f",
+      "venueSlug": "live-escapes-salisbury-0aan5tr",
+      "roomSlug": "respect-002l4ml"
+    },
+    {
+      "sourceId": 23,
+      "sourceRef": "csv:v1:baadb598cd120405a7e408f209f58a84eb2fa5936c866e2370487e21e61d5a0d",
+      "venueSlug": "exciting-escapes-southampton-0v22r06",
+      "roomSlug": "change-the-record-1x1wk8z"
+    },
+    {
+      "sourceId": 24,
+      "sourceRef": "csv:v1:1047f3b0fba94291d473cdcd9526ffdedeb503649cffbd4ced32325d6bb06ef8",
+      "venueSlug": "time-trap-mysteries-reading-0jsek0y",
+      "roomSlug": "imaginarium-1863-1sz0hta"
+    },
+    {
+      "sourceId": 25,
+      "sourceRef": "csv:v1:6bd9c593a4cdd84edaaf155e9e5b7f098213174791338ada4acc4c8399328cef",
+      "venueSlug": "elusion-southampton-0235y80",
+      "roomSlug": "seven-sins-0m0wd2p"
+    },
+    {
+      "sourceId": 26,
+      "sourceRef": "csv:v1:fdfd39dab0fe9fd251b5afb10eff12e50d346039ac022cc18cc713ab00d29e51",
+      "venueSlug": "excluesive-games-newbury-1ixplnh",
+      "roomSlug": "lost-island-escape-0gbdf03"
+    },
+    {
+      "sourceId": 27,
+      "sourceRef": "csv:v1:064a841d4810313e1f0d2196719b4026eaa24eb8ce3d4afb7373a9f709d96235",
+      "venueSlug": "escapologic-nottingham-0psmn0f",
+      "roomSlug": "cypt-ic-1wu0jmo"
+    },
+    {
+      "sourceId": 28,
+      "sourceRef": "csv:v1:d4554193b33a45dbef73139f7cfb669ab767088e3374f7f374dcf46ff9154158",
+      "venueSlug": "escapologic-nottingham-0psmn0f",
+      "roomSlug": "highstakes-1mmtc2e"
+    },
+    {
+      "sourceId": 29,
+      "sourceRef": "csv:v1:0c17306d598fba82ce475670b0555411d3a4af21e00e88886ad2c74150551c57",
+      "venueSlug": "ilocked-nottingham-161h9gz",
+      "roomSlug": "mummy-151ofa8"
+    },
+    {
+      "sourceId": 30,
+      "sourceRef": "csv:v1:c32eee2d57a8accefd737f8d8a8fe75f12df59c87f0589b8dd02182d8aaf9310",
+      "venueSlug": "escapologic-nottingham-0psmn0f",
+      "roomSlug": "curio-08ul9mp"
+    },
+    {
+      "sourceId": 31,
+      "sourceRef": "csv:v1:510479835d88622376d4c2188bebb585922e02fc7fb8e938b328ea5b2f15e22c",
+      "venueSlug": "escapologic-leicester-0yjxyso",
+      "roomSlug": "operation-magnus-0ynqhft"
+    },
+    {
+      "sourceId": 32,
+      "sourceRef": "csv:v1:4ac2df21ba8f6fe3dcbe2dc133709b1106441e509cc6fbcd8bed0d5c4fa9cb12",
+      "venueSlug": "cluecrypted-new-milton-0b4rc2a",
+      "roomSlug": "the-parc-part-1-178mxyr"
+    },
+    {
+      "sourceId": 33,
+      "sourceRef": "csv:v1:bbb8c7d23af168c634d1e694754e721abc6b3bacde4331731670d65a05c6feb4",
+      "venueSlug": "exciting-escapes-basingstoke-0pxlooy",
+      "roomSlug": "murder-at-the-movies-0ffaq85"
+    },
+    {
+      "sourceId": 34,
+      "sourceRef": "csv:v1:ecf47afbf6f9fa66664a2db3a6c0626edd57ff79d75acda1dc4da00251fe28ac",
+      "venueSlug": "incarcerated-swindon-0gpqq0s",
+      "roomSlug": "prisoner-of-war-0kh91d4"
+    },
+    {
+      "sourceId": 35,
+      "sourceRef": "csv:v1:e7627db3b032ba823a8c49e11a1d0dea00307a99a132bf13381f2fe14712fea5",
+      "venueSlug": "exciting-escapes-southampton-0v22r06",
+      "roomSlug": "spies-in-space-08nafs6"
+    },
+    {
+      "sourceId": 36,
+      "sourceRef": "csv:v1:ceae5f1dd093a1eeab9466ffb8f53ad38729964db8365f9178a3628a6f406095",
+      "venueSlug": "exciting-escapes-basingstoke-0pxlooy",
+      "roomSlug": "banking-on-trouble-1-06atvza"
+    },
+    {
+      "sourceId": 37,
+      "sourceRef": "csv:v1:5a2b3fb23e3778ab4b5e681c26c5754a9dbd467e91804f15bfb73c8022b5711b",
+      "venueSlug": "uescape-bournemouth-0sgb6qj",
+      "roomSlug": "the-barber-shop-1dwty8a"
+    },
+    {
+      "sourceId": 38,
+      "sourceRef": "csv:v1:a6c4d2181913485638fab59d69b2a6278d4ca2ba996b2be3d30eb6654614a728",
+      "venueSlug": "marvo-mysteries-bournemouth-0lkusr9",
+      "roomSlug": "room-1-marvo-induction-0anw6s9"
+    },
+    {
+      "sourceId": 39,
+      "sourceRef": "csv:v1:7bc7b1d66fe847114c861995d1697f5707ad38d69ffbc87a53fdfe26436c8f65",
+      "venueSlug": "exciting-escapes-southampton-0v22r06",
+      "roomSlug": "breaking-the-law-061shdr"
+    },
+    {
+      "sourceId": 40,
+      "sourceRef": "csv:v1:622ba48d75a3bca4c1a74ce8dbd89839fc7004ddb367e106e41d00677bb1c3e3",
+      "venueSlug": "deadlocked-reading-1nfdj0d",
+      "roomSlug": "the-testing-chamber-0yx0v2y"
+    },
+    {
+      "sourceId": 41,
+      "sourceRef": "csv:v1:002974a146fba421028035860a5068513fb0befb996dca728f8412010c565cab",
+      "venueSlug": "escape-reading-reading-0mmyhqi",
+      "roomSlug": "kidnapped-0szrdm7"
+    },
+    {
+      "sourceId": 42,
+      "sourceRef": "csv:v1:601a8deacec755648b0965a2d1056d6e74cfe65c3b567e6fcde13048768aa2ba",
+      "venueSlug": "macguffin-project-bournemouth-1dksk7q",
+      "roomSlug": "macguffin-1k3jz0r"
+    },
+    {
+      "sourceId": 43,
+      "sourceRef": "csv:v1:ab487bf5d53e319409e7803d88e135789b1eaa53b7a06b16e0d7a2504d5bc23d",
+      "venueSlug": "macguffin-project-bournemouth-1dksk7q",
+      "roomSlug": "magician-1b7e0yk"
+    },
+    {
+      "sourceId": 44,
+      "sourceRef": "csv:v1:e826628ead5f6564b5b0a82e2168484607a99915abf6b5a6becd4c0c0d965d14",
+      "venueSlug": "pier-pressure-brighton-14bgfdh",
+      "roomSlug": "the-pavillion-perplex-03d19fq"
+    },
+    {
+      "sourceId": 45,
+      "sourceRef": "csv:v1:c41c19015b7b805c2fa0a60a21c1aff89305bf70d170fdbf26a9be2eef013d64",
+      "venueSlug": "time-trap-mysteries-reading-0jsek0y",
+      "roomSlug": "the-divide-1dhasz1"
+    },
+    {
+      "sourceId": 46,
+      "sourceRef": "csv:v1:1e45b5d71ea212ddf0be8fa8e6fedd52b12efa2622a60bd22773c21a9c307fbe",
+      "venueSlug": "houdini-southampton-1en053b",
+      "roomSlug": "titanic-0fot5wp"
+    },
+    {
+      "sourceId": 47,
+      "sourceRef": "csv:v1:3479d3409372165173773fe2d9dda9bbecfb20ca840554cf913393df0eab49b0",
+      "venueSlug": "uescape-bournemouth-0sgb6qj",
+      "roomSlug": "physco-surgeon-15mtszo"
+    },
+    {
+      "sourceId": 48,
+      "sourceRef": "csv:v1:8ddcc181bb20cb675ec47a3a44b8bb294ed3e5ba337f47511b24115b9f65a6bd",
+      "venueSlug": "lockey-bournemouth-034tk1g",
+      "roomSlug": "ace-ventura-1xrwxcn"
+    },
+    {
+      "sourceId": 49,
+      "sourceRef": "csv:v1:969a3d522e7cac9b7f06d95496c8754c9105b72136514dab7041be7262e2c096",
+      "venueSlug": "tulleys-crawley-1wqbxnk",
+      "roomSlug": "nethercott-manor-02nd444"
+    },
+    {
+      "sourceId": 50,
+      "sourceRef": "csv:v1:f953a5b4a68528991a1e445e70dde2593674c7dd5946fc55a6692e4302e69bb9",
+      "venueSlug": "cluecapers-winchester-12mvfyc",
+      "roomSlug": "a-curious-inheritance-1dfts1m"
+    },
+    {
+      "sourceId": 51,
+      "sourceRef": "csv:v1:0221245bbd870341d6924ff8597441e05d074157e3d116bf8fe9d927c600237a",
+      "venueSlug": "cluecapers-winchester-12mvfyc",
+      "roomSlug": "misson-to-winchintzy-0ljcm8s"
+    },
+    {
+      "sourceId": 52,
+      "sourceRef": "csv:v1:c25531cfec1a0aa28c64856abc89b5c1ab1d98656006d2a28c3def998f44afe4",
+      "venueSlug": "escape-reading-reading-0mmyhqi",
+      "roomSlug": "blown-away-0ohbznd"
+    },
+    {
+      "sourceId": 53,
+      "sourceRef": "csv:v1:f7eba9b125f34ee5a28e33f7c95f3cd53776e487e4fcefe8cc41225e3aac3029",
+      "venueSlug": "bewilderbox-brighton-0vihbot",
+      "roomSlug": "d-a-v-e-14tskyz"
+    },
+    {
+      "sourceId": 54,
+      "sourceRef": "csv:v1:4ae777733b780dc58bce3095e242a01a370a266744a74bb392f09e99b94d8fcb",
+      "venueSlug": "exscream-escapes-staines-1c88l1k",
+      "roomSlug": "historic-room-054-name-unknown-0rwrqb0"
+    },
+    {
+      "sourceId": 55,
+      "sourceRef": "csv:v1:e1b457c552dddd6e3dea3cb31352391c07bffed6ce873b1212a18a2ce5c42381",
+      "venueSlug": "exscream-escapes-staines-1c88l1k",
+      "roomSlug": "historic-room-055-name-unknown-0qa81j1"
+    },
+    {
+      "sourceId": 56,
+      "sourceRef": "csv:v1:83f07258989553ed870a3c45dd5ab687849b655c27008c865b3b287aaa3b63e2",
+      "venueSlug": "time-trap-mysteries-reading-0jsek0y",
+      "roomSlug": "station-x-0hgzc4j"
+    },
+    {
+      "sourceId": 57,
+      "sourceRef": "csv:v1:f6bfebec929a33f3d64093bc0f3e4510628d5dc79c1b133cee747e147dee660c",
+      "venueSlug": "salisbury-escape-rooms-salisbury-08xd26i",
+      "roomSlug": "salisbury-csi-crime-scene-investigation-108dn25"
+    },
+    {
+      "sourceId": 58,
+      "sourceRef": "csv:v1:59ac417b81abb7b05a41f07c21ac4403c8f21fc48e707534d60bb476b2c4b951",
+      "venueSlug": "escape-reading-reading-0mmyhqi",
+      "roomSlug": "vampire-05q3lvx"
+    },
+    {
+      "sourceId": 59,
+      "sourceRef": "csv:v1:67dfcf1661ad386844f107cd98f3cb78a46041cdad46c8af603d3798e66eef9d",
+      "venueSlug": "clue-hq-kingston-1v9qb50",
+      "roomSlug": "bunker-38-0l7ehfn"
+    },
+    {
+      "sourceId": 60,
+      "sourceRef": "csv:v1:a38d8c26206176e68661ba463f07adadbdef4165d55f16a29e621aa483604ad3",
+      "venueSlug": "the-panic-room-gravesend-0n5vsqd",
+      "roomSlug": "loop-0qsrpfv"
+    },
+    {
+      "sourceId": 61,
+      "sourceRef": "csv:v1:c0ffa5a11b75a5114104fb9b211e5e9b9c4ae61d939131ebd6fc884eeb78729b",
+      "venueSlug": "the-escapement-margate-0f8wtv0",
+      "roomSlug": "pirates-of-polaris-1fkfxx2"
+    },
+    {
+      "sourceId": 62,
+      "sourceRef": "csv:v1:1c4783e40aeddc8575b33bebbcd93f5fbe844ad97288e05bfa0751737f05eb53",
+      "venueSlug": "the-escapement-margate-0f8wtv0",
+      "roomSlug": "egyptian-tomb-0fgkbvm"
+    },
+    {
+      "sourceId": 63,
+      "sourceRef": "csv:v1:f0f74d53b34f2884b242a02ac4da4f99c95c5ae4bc3fbcbbd6e9fccb788f68ae",
+      "venueSlug": "the-escapement-margate-0f8wtv0",
+      "roomSlug": "the-pit-0ctp0sx"
+    },
+    {
+      "sourceId": 64,
+      "sourceRef": "csv:v1:cb73a499d545ef6ab468eb727cb29cc4bcf853f113f51510676664ae70691b60",
+      "venueSlug": "ctrl-alt-esc-margate-0tq58ld",
+      "roomSlug": "frankenscape-1rk5kuy"
+    },
+    {
+      "sourceId": 65,
+      "sourceRef": "csv:v1:c6d786be707d674c5d8abd497c6479edf28ce93bce19757404ac11ad1fb11378",
+      "venueSlug": "ctrl-alt-esc-margate-0tq58ld",
+      "roomSlug": "spacescape-0o7p779"
+    },
+    {
+      "sourceId": 66,
+      "sourceRef": "csv:v1:9cc5bc88b4a41560e20a2e451447d6d78069e131b56e6442e73cbeb66daca07c",
+      "venueSlug": "the-panic-room-gravesend-0n5vsqd",
+      "roomSlug": "old-father-time-02wpixl"
+    },
+    {
+      "sourceId": 67,
+      "sourceRef": "csv:v1:a4f987061dcd94b9fe2e02a80283737ef419f4a773a82a26ea0ee226b9d95b21",
+      "venueSlug": "escape-plan-live-chatham-00ymhjd",
+      "roomSlug": "what-the-dickens-1fh27v3"
+    },
+    {
+      "sourceId": 68,
+      "sourceRef": "csv:v1:3669e39dfd68aaf3699232e8fa4a22a63693ddbd75d9145400f44be65050fcd7",
+      "venueSlug": "the-panic-room-gravesend-0n5vsqd",
+      "roomSlug": "dinoland-1u1nmes"
+    },
+    {
+      "sourceId": 69,
+      "sourceRef": "csv:v1:c845ba29b4dd3b1e87657af9134881339cef4b5f62c8c75959345c6aebc1cd51",
+      "venueSlug": "escape-oxford-1rqcgts",
+      "roomSlug": "the-4th-samurai-1r3bpse"
+    },
+    {
+      "sourceId": 70,
+      "sourceRef": "csv:v1:e0c6b8de205612a630f41a0de7cc92a2cf4380ddf58c3300bd4cfa037431b199",
+      "venueSlug": "knock-out-escape-rooms-reading-0crjhy2",
+      "roomSlug": "9-5-assassin-18i54v7"
+    },
+    {
+      "sourceId": 71,
+      "sourceRef": "csv:v1:c4565e613af46e585a6981c46081cefae6d2e275e7e13b46097d8f0df5f5a810",
+      "venueSlug": "chichester-escape-room-chichester-1371qh1",
+      "roomSlug": "cabin-in-the-woods-18fg2ps"
+    },
+    {
+      "sourceId": 72,
+      "sourceRef": "csv:v1:f517c243c067a14acbbb289d8947aa700480d9b1cd94104a97db1bd3d4c32675",
+      "venueSlug": "exciting-escapes-portsmouth-112pw2b",
+      "roomSlug": "the-voices-we-hear-074aesn"
+    },
+    {
+      "sourceId": 73,
+      "sourceRef": "csv:v1:91474775a641a03286685b689f709de8a35b18fd9c722125ef90e65a3e888c2a",
+      "venueSlug": "genius-escapes-eastleigh-1ybbb5e",
+      "roomSlug": "nuclear-nightmare-00xzst8"
+    },
+    {
+      "sourceId": 74,
+      "sourceRef": "csv:v1:059621e29ef67202db8fc62d638c0a63a1dc59ebe3deb31e68a5194c6567fee9",
+      "venueSlug": "co-decode-swindon-0578uoa",
+      "roomSlug": "sub-terra-1qhlri3"
+    },
+    {
+      "sourceId": 75,
+      "sourceRef": "csv:v1:9b1933a625925d2e986a2dee6f0c615c0d76d7edab9c530d93c7431eb647b762",
+      "venueSlug": "11th-hour-escapes-chippenham-06gps9c",
+      "roomSlug": "music-0ohwdis"
+    },
+    {
+      "sourceId": 76,
+      "sourceRef": "csv:v1:df227072ca3b18e274627eb5963cfd9e07eced0dedf96ebac7d0aa8e1c952b95",
+      "venueSlug": "other-world-escapes-portsmouth-0ejtqm0",
+      "roomSlug": "pub-1hek4uc"
+    },
+    {
+      "sourceId": 77,
+      "sourceRef": "csv:v1:29232105687fb64e0191d3cd6893d7f20935fc0b12c4fcb1c869e31cb2f1c592",
+      "venueSlug": "lock-and-code-weston-sm-1e1d2k6",
+      "roomSlug": "homecoming-18zfaih"
+    },
+    {
+      "sourceId": 78,
+      "sourceRef": "csv:v1:db8a258d904b3cd17bf7104456c4b24e357a0969753df74fab257d449028394b",
+      "venueSlug": "riddlr-bristol-0j0bead",
+      "roomSlug": "the-brunel-enigma-0eso8pb"
+    },
+    {
+      "sourceId": 79,
+      "sourceRef": "csv:v1:46d5cb10e514aefd0860378aea24ddc0e243f2f861e8365d35973de9e9534606",
+      "venueSlug": "11th-hour-escapes-chippenham-06gps9c",
+      "roomSlug": "inheritance-15sp40b"
+    },
+    {
+      "sourceId": 80,
+      "sourceRef": "csv:v1:4c18a21d75c872b9cfb913a27a98cd05eac318cdf31f6483025e69dfff5e3c10",
+      "venueSlug": "exitus-cardiff-1ps437w",
+      "roomSlug": "plague-0rsi78n"
+    },
+    {
+      "sourceId": 81,
+      "sourceRef": "csv:v1:48627d5ef7c609dc7cee5167de1971851a559112ec3e9ff836a2a81e1d7d8b18",
+      "venueSlug": "exitus-cardiff-1ps437w",
+      "roomSlug": "the-curse-of-senutep-0ifftvl"
+    },
+    {
+      "sourceId": 82,
+      "sourceRef": "csv:v1:23b45743dc89fdf7a8b7a3bdd243240f68805a609d839d0d69ac725cbf781e6d",
+      "venueSlug": "exciting-escapes-southampton-0v22r06",
+      "roomSlug": "silence-is-a-virtue-1st0tvg"
+    },
+    {
+      "sourceId": 83,
+      "sourceRef": "csv:v1:d07cb2869fdf2563cdfb753a03c09281d1c4d4c4a6695141f65f0519d0b53b37",
+      "venueSlug": "locked-in-edinburgh-edinburgh-0wucdr2",
+      "roomSlug": "the-secret-lab-1nmh04v"
+    },
+    {
+      "sourceId": 84,
+      "sourceRef": "csv:v1:d61d0ca66ebbc158b888c6a3a7501d34da5fa12eff47cf716b3d77feb2093d05",
+      "venueSlug": "locked-in-edinburgh-edinburgh-0wucdr2",
+      "roomSlug": "the-cutting-room-0oyy2r7"
+    },
+    {
+      "sourceId": 85,
+      "sourceRef": "csv:v1:7122296230f7fb2da1e20e5cf6351d888055c878a58b7118bf1b9ebb056e083e",
+      "venueSlug": "can-you-escape-edinburgh-15wxm0y",
+      "roomSlug": "operation-oddessy-09149zr"
+    },
+    {
+      "sourceId": 86,
+      "sourceRef": "csv:v1:cb71b45d5e1232a48b2d8447a5c4b0f99e884776d26458351772329b1cfdff0b",
+      "venueSlug": "can-you-escape-edinburgh-15wxm0y",
+      "roomSlug": "operation-spellbound-1jzs93w"
+    },
+    {
+      "sourceId": 87,
+      "sourceRef": "csv:v1:c921642de1868bebcfa74f026b4ed9bbd8f200332f246a370d35b5c3e2173986",
+      "venueSlug": "time-trap-mysteries-reading-0jsek0y",
+      "roomSlug": "rebellion-1136-1yi2m4k"
+    },
+    {
+      "sourceId": 88,
+      "sourceRef": "csv:v1:4bcb26e6b8fa42d04a3dc50d95b4420dd3a781ab85929c711f9b4bc79fc296fe",
+      "venueSlug": "tulleys-crawley-1wqbxnk",
+      "roomSlug": "dodge-city-0il18in"
+    },
+    {
+      "sourceId": 89,
+      "sourceRef": "csv:v1:9e93bbec2ea5965ddf3ea11841627ed01120a1afe5bdbe02679df0a2bad25b5e",
+      "venueSlug": "ellusion-southampton-0ywhnl0",
+      "roomSlug": "cursed-waters-0fqjzad"
+    },
+    {
+      "sourceId": 90,
+      "sourceRef": "csv:v1:5f6b11e90ff04ad9264d6a6252b48d751483c5d1d710ba18f8aabcbcb9d794a9",
+      "venueSlug": "escape-reading-reading-0mmyhqi",
+      "roomSlug": "ram-raid-0u5x72l"
+    },
+    {
+      "sourceId": 91,
+      "sourceRef": "csv:v1:5e8df92dd77346d761cecc1202e80d27cb0b0b59ef35458325dcfcef615bbe73",
+      "venueSlug": "exciting-escapes-portsmouth-112pw2b",
+      "roomSlug": "1999-17cwnpt"
+    },
+    {
+      "sourceId": 92,
+      "sourceRef": "csv:v1:0cc286d6d7f78c3cbeaf147126c53e5ab1e9d115696c8bfd9a83dd47b2b5c8fb",
+      "venueSlug": "encryption-lewes-0tl81zc",
+      "roomSlug": "code-breaker-0xd0ok8"
+    },
+    {
+      "sourceId": 93,
+      "sourceRef": "csv:v1:4cacbced9df48b64386187e0cc69bfc20c11b8e18a8dad6fda303497bf6884c8",
+      "venueSlug": "pier-pressure-brighton-14bgfdh",
+      "roomSlug": "raver-quest-0g8zlob"
+    },
+    {
+      "sourceId": 94,
+      "sourceRef": "csv:v1:c1653cabb9a4abeb95c6257f93b8faa3b70996ec61effc5390e079d3caa50c12",
+      "venueSlug": "bewilderbox-brighton-0vihbot",
+      "roomSlug": "bewilderbox-initiative-1a0bhqm"
+    },
+    {
+      "sourceId": 95,
+      "sourceRef": "csv:v1:7a97a08fee4680b6d6e14f771de26fa4dfb35d536a6047a87be439dfbcffbef2",
+      "venueSlug": "unknown-venue-newport-newport-1q8pnev",
+      "roomSlug": "host-0dd4txr"
+    },
+    {
+      "sourceId": 96,
+      "sourceRef": "csv:v1:2b52b73e250dee6017cca419de26ad3386f1ecd17c0564417af0a794261df4e7",
+      "venueSlug": "time-trap-mysteries-reading-0jsek0y",
+      "roomSlug": "pudding-lane-0xm4cvo"
+    },
+    {
+      "sourceId": 97,
+      "sourceRef": "csv:v1:162c75084579cad35f50e01401910b8061ab9d197415ef2d451fc0bacde9200c",
+      "venueSlug": "the-extraction-room-maidstone-0vcwqwg",
+      "roomSlug": "zombie-10fx727"
+    },
+    {
+      "sourceId": 98,
+      "sourceRef": "csv:v1:4a5984b19c2f05db95dc33afb9bb7f35c172fab20b5761631b54b5b468b8414c",
+      "venueSlug": "hysteria-rochester-1owzs53",
+      "roomSlug": "aftermath-1m1tisj"
+    },
+    {
+      "sourceId": 99,
+      "sourceRef": "csv:v1:83613a85eebe659431b6b855a6fe594c238861db75a63536d71c33070ec509c8",
+      "venueSlug": "mythologic-gillingham-1yylbps",
+      "roomSlug": "the-game-1aomyse"
+    },
+    {
+      "sourceId": 100,
+      "sourceRef": "csv:v1:93f4f45226ce0f69d1583f245c626fbf397eaa4fe855f7ae11aba7cb375f4825",
+      "venueSlug": "ctrl-alt-esc-margate-0tq58ld",
+      "roomSlug": "detention-1bix8rf"
+    },
+    {
+      "sourceId": 101,
+      "sourceRef": "csv:v1:025039c37c7804dce1a2693197b8a1c967f6d1f640281c9bba2e507877eab756",
+      "venueSlug": "other-world-escapes-portsmouth-0ejtqm0",
+      "roomSlug": "chip-shop-19y6r7l"
+    },
+    {
+      "sourceId": 102,
+      "sourceRef": "csv:v1:239e5c34922afddd96e7d922cc7d742de08ab4164fed9fe6c1a05eda4913519a",
+      "venueSlug": "mythologic-gillingham-1yylbps",
+      "roomSlug": "hypnos-0o2lo16"
+    },
+    {
+      "sourceId": 103,
+      "sourceRef": "csv:v1:19913763c645324a122d9995dd15bced932daf6c9ab370c6c72b492f2b8f1b53",
+      "venueSlug": "cleverdilema-faversham-1cgeve7",
+      "roomSlug": "dracula-1foxdol"
+    },
+    {
+      "sourceId": 104,
+      "sourceRef": "csv:v1:dcfee5f7e20fa8679b741ca6671dd92a851dfc30845cfbbe83e7f93157d3fa7f",
+      "venueSlug": "hysteria-chatham-0o92ub8",
+      "roomSlug": "motel-california-1jfeswk"
+    },
+    {
+      "sourceId": 105,
+      "sourceRef": "csv:v1:a22394597a5bd1f72e5fbe652e71be1693aff924c7d08f1dde19c069e6775242",
+      "venueSlug": "salisbury-escape-rooms-salisbury-08xd26i",
+      "roomSlug": "death-at-the-lab-1sa71dy"
+    },
+    {
+      "sourceId": 106,
+      "sourceRef": "csv:v1:0c8a8b444ddb4d004ad21768f72a9cd3e0c1d17ac0d093f78ff918a327b61b00",
+      "venueSlug": "ellusion-southampton-0ywhnl0",
+      "roomSlug": "from-beyond-03bmeuc"
+    },
+    {
+      "sourceId": 107,
+      "sourceRef": "csv:v1:528ef402d86754e56f3951822f287ce2b6f1d24ff5ccb462edf0a0e18532200a",
+      "venueSlug": "other-world-escapes-portsmouth-0ejtqm0",
+      "roomSlug": "lapland-0pz1ff7"
+    },
+    {
+      "sourceId": 108,
+      "sourceRef": "csv:v1:567cb96dd020fb0a4e2c4589e6277e7b5a1cf7fa06554a02ae711608ca186c13",
+      "venueSlug": "x-it-bradford-1nuoawh",
+      "roomSlug": "afterlife-0f7nbu3"
+    },
+    {
+      "sourceId": 109,
+      "sourceRef": "csv:v1:c80769eb1318c76cf1c7afa57356b0883af10e977eedaf4c4bb9af1c3524bbcd",
+      "venueSlug": "the-escaporium-halifax-17du6xl",
+      "roomSlug": "crux-codicillus-06x6mly"
+    },
+    {
+      "sourceId": 110,
+      "sourceRef": "csv:v1:a2d863b10dcc1f3d69afdc9c0f3be0e3360f77f66c875404b5f64779cb27d6a1",
+      "venueSlug": "letsxscape-newark-1m87xqx",
+      "roomSlug": "the-rig-1rf1bo2"
+    },
+    {
+      "sourceId": 111,
+      "sourceRef": "csv:v1:57111377b9d8656a637f1eedae79374cd7bdcf6fe9ea49f0588bf4b8ee6eea18",
+      "venueSlug": "make-your-escape-derby-1lx0h37",
+      "roomSlug": "utopia-01ritph"
+    },
+    {
+      "sourceId": 112,
+      "sourceRef": "csv:v1:fbe9916a38fb257b66333453d750f44d9323904f2d1a0fdb3799e1e1b3f1f203",
+      "venueSlug": "mythologic-gillingham-1yylbps",
+      "roomSlug": "csi-13zoyfi"
+    },
+    {
+      "sourceId": 113,
+      "sourceRef": "csv:v1:81488e873181e3470ef64e3dc6cb2bdb5f2832966517d3ad1027e64548376db7",
+      "venueSlug": "cleverdilema-faversham-1cgeve7",
+      "roomSlug": "wild-west-0ll346g"
+    },
+    {
+      "sourceId": 114,
+      "sourceRef": "csv:v1:f153dc1660c1485a845ce46c2066c52e86fa5c2c6f3677617f7a6e0a11d87c34",
+      "venueSlug": "houdinis-southampton-0sign88",
+      "roomSlug": "extinct-1q3jy1w"
+    },
+    {
+      "sourceId": 115,
+      "sourceRef": "csv:v1:96c624f5d284b0adb36e7f40ef2d042eed81f2dc772c947103d2ff6a62549598",
+      "venueSlug": "escape-reading-reading-0mmyhqi",
+      "roomSlug": "age-of-magic-1fto8ju"
+    },
+    {
+      "sourceId": 116,
+      "sourceRef": "csv:v1:7b58cb9942aea8db6e99b4457b8949b2b9a18a9ba0dbfe11d9e2205f86362977",
+      "venueSlug": "puzzelogical-bracknell-0kkxdgs",
+      "roomSlug": "the-vault-1dbtfr4"
+    },
+    {
+      "sourceId": 117,
+      "sourceRef": "csv:v1:0125cf7101ab2316d61101d873358062e70d60eefefda2a17fa59d8f180115de",
+      "venueSlug": "unknown-venue-leamington-leamington-09cnj9n",
+      "roomSlug": "the-machine-1pv2lvd"
+    },
+    {
+      "sourceId": 118,
+      "sourceRef": "csv:v1:45c02069012d1de4a7f34ed5d83ebeb4b7aae52d287821faf00f80233db9d16a",
+      "venueSlug": "houdinis-birmingham-1sqg19s",
+      "roomSlug": "the-temple-1mulp65"
+    },
+    {
+      "sourceId": 119,
+      "sourceRef": "csv:v1:a179554d0d7b251e471b7bee1310df41287c36131c94ee594bdd03cb9ac8d883",
+      "venueSlug": "exciting-escapes-portsmouth-112pw2b",
+      "roomSlug": "danger-on-the-dance-floor-90-s-1tb0rkd"
+    },
+    {
+      "sourceId": 120,
+      "sourceRef": "csv:v1:9db18b12dee3fcd1d0e8e57e6a0fa358b6eaec0b3ca8f0dc246f547341c556e7",
+      "venueSlug": "exciting-escapes-basingstoke-0pxlooy",
+      "roomSlug": "disappearing-duchess-067k4jj"
+    },
+    {
+      "sourceId": 121,
+      "sourceRef": "csv:v1:112e741c5acfbade78a7dd4d295b1077df9aa5225a8d01a4b231ca3c9ffd9bfa",
+      "venueSlug": "pier-pressure-brighton-14bgfdh",
+      "roomSlug": "modrophenia-09ceuq1"
+    },
+    {
+      "sourceId": 122,
+      "sourceRef": "csv:v1:44dff3e8c176ac8c459d810588dc5e7852f0941af12ba01c29b61addac1ce429",
+      "venueSlug": "hounds-crawley-1t7apjn",
+      "roomSlug": "questionable-ethics-1qh4dcv"
+    },
+    {
+      "sourceId": 123,
+      "sourceRef": "csv:v1:5c1624abcb8b4e5dff3f3cf644876284c6f208788094df14969e227064c3e0d5",
+      "venueSlug": "adventure-rooms-cardiff-0n7fvmy",
+      "roomSlug": "the-black-queen-0e0lk95"
+    },
+    {
+      "sourceId": 124,
+      "sourceRef": "csv:v1:4f3ed365a86c365cd78671c4e9a53ce2e24be282705d72be504b8545a247cdbf",
+      "venueSlug": "riddlr-bristol-0j0bead",
+      "roomSlug": "wizards-apprentice-1q6mdwm"
+    },
+    {
+      "sourceId": 125,
+      "sourceRef": "csv:v1:dd96dbc725c03d5c67a2fe758e57cfc06721275ba39c7b5e971691ab9aaec9f0",
+      "venueSlug": "exitus-cardiff-1ps437w",
+      "roomSlug": "tenovus-virus-tinkerers-06f7475"
+    },
+    {
+      "sourceId": 126,
+      "sourceRef": "csv:v1:99d05db849c05cfad2ef9caa37b9571c88107f556cd97823ca028cf8aeaa6c9c",
+      "venueSlug": "time-trap-mysteries-reading-0jsek0y",
+      "roomSlug": "curiouser-and-curiouser-1871-0ujcl5f"
+    },
+    {
+      "sourceId": 127,
+      "sourceRef": "csv:v1:e3ea8b4cc3a38afc9103527d17c9ee8a2b6c1c38d3a233c980f12167eebab83d",
+      "venueSlug": "exciting-escapes-basingstoke-0pxlooy",
+      "roomSlug": "disappearing-duchess-part-2-0opzvv6"
+    },
+    {
+      "sourceId": 128,
+      "sourceRef": "csv:v1:6f4611134cc71d32656453b10bf7481f918d18a596d12beb431c8fb26bdcd14c",
+      "venueSlug": "hounds-crawley-1t7apjn",
+      "roomSlug": "southern-discomfort-0ue2w6z"
+    },
+    {
+      "sourceId": 129,
+      "sourceRef": "csv:v1:68b7d3afac0e8a320291ff7d934dc4e32bc0114988f6555264c7f12c7d2a0bbd",
+      "venueSlug": "hounds-crawley-1t7apjn",
+      "roomSlug": "the-explorers-diary-0se7qy3"
+    },
+    {
+      "sourceId": 130,
+      "sourceRef": "csv:v1:7bb560247830c3842a2814ce70b2bb5a7fcdb44de0d667eee59f7a199426de7d",
+      "venueSlug": "trapped-in-fiction-basingstoke-02dj0pc",
+      "roomSlug": "the-forbidden-room-of-fun-0nrc6pk"
+    },
+    {
+      "sourceId": 131,
+      "sourceRef": "csv:v1:3124878475286e29d82f97d846c5feafe30902be0ef1bee436105af2476959e2",
+      "venueSlug": "paradox-guildford-07jklck",
+      "roomSlug": "venus-0jsm69y"
+    },
+    {
+      "sourceId": 132,
+      "sourceRef": "csv:v1:5d4985a2bdadaa82b1d913fa4c2677de9c51a417edfd356280e258bcf0097e5c",
+      "venueSlug": "salisbury-escape-rooms-salisbury-08xd26i",
+      "roomSlug": "escape-from-space-13612b0"
+    },
+    {
+      "sourceId": 133,
+      "sourceRef": "csv:v1:3163b7125cf61bdef0140f3da4475b021f9cf5594f7b66f37acd40a55b190c34",
+      "venueSlug": "escape-rushden-rushden-1e8n72a",
+      "roomSlug": "guardian-of-the-gallery-1x47lue"
+    },
+    {
+      "sourceId": 134,
+      "sourceRef": "csv:v1:9196b1654960b1a0054bd57fa2faae178fa4a1a7b00395f1e7b65a2b28a3aeae",
+      "venueSlug": "breakescape-loughborough-1iue5q8",
+      "roomSlug": "the-enchanted-forest-0duo6b9"
+    },
+    {
+      "sourceId": 135,
+      "sourceRef": "csv:v1:d80c4011c8a346cb33e07cd7edaa114cf1d50167ef6f8fffa967e561ba64c47a",
+      "venueSlug": "make-your-escape-derby-1lx0h37",
+      "roomSlug": "spellbound-1swehmf"
+    },
+    {
+      "sourceId": 136,
+      "sourceRef": "csv:v1:f1de87401e6a454821882ac27532ae90aa4c7431b8341be7be41fda2808e3928",
+      "venueSlug": "unescapable-derby-1484uuo",
+      "roomSlug": "mary-0hut9na"
+    },
+    {
+      "sourceId": 137,
+      "sourceRef": "csv:v1:2368959c47f79befc17da01890bf0b5ad172968de70f4737cc9a04203b12038d",
+      "venueSlug": "cryptology-nottingham-0ylsz6u",
+      "roomSlug": "dreamscape-1f2do2a"
+    },
+    {
+      "sourceId": 138,
+      "sourceRef": "csv:v1:af36b4df692450eb73433c3c8381a0e35a1ec4f159850f7701c8afc13deedc0a",
+      "venueSlug": "cave-escape-nottingham-0159t2c",
+      "roomSlug": "carfax-1uhqvwc"
+    },
+    {
+      "sourceId": 139,
+      "sourceRef": "csv:v1:25a3f7426a9971096f37a75845a31bf12f192f00293cc06b64c8b5334050c9fa",
+      "venueSlug": "escape-nation-stafford-1wi9szm",
+      "roomSlug": "the-citadel-0dryad0"
+    },
+    {
+      "sourceId": 140,
+      "sourceRef": "csv:v1:f21612ba457420cece887635675d654fb496f5fa63549a4dcd2127af441fc40d",
+      "venueSlug": "clue-cracker-tunbridge-wells-1u0spl2",
+      "roomSlug": "diamond-dogs-0e3i3ce"
+    },
+    {
+      "sourceId": 141,
+      "sourceRef": "csv:v1:88197ad3d78734cc3528dc3cfa4b3dbb81099f8acb6fd8db888597765a748a1a",
+      "venueSlug": "clue-cracker-tunbridge-wells-1u0spl2",
+      "roomSlug": "temple-quest-0auchs6"
+    },
+    {
+      "sourceId": 142,
+      "sourceRef": "csv:v1:5515a28c3b3ade6c3381eb40c010d7aa362b31f94e77125653ac6c6085f990b4",
+      "venueSlug": "dark-master-tunbridge-wells-0wovtyy",
+      "roomSlug": "into-the-reliquary-0qq0o9u"
+    },
+    {
+      "sourceId": 143,
+      "sourceRef": "csv:v1:cfa426594300a3ca34dfa2e2e7fcf660db2c9ecc15ea478eec239378772fab2b",
+      "venueSlug": "exitus-cardiff-1ps437w",
+      "roomSlug": "coco-loco-07o546g"
+    },
+    {
+      "sourceId": 144,
+      "sourceRef": "csv:v1:ef7551e90ab6f1511375de59cdb6475d3007095e9a819e21eeb2253b5ccc3d49",
+      "venueSlug": "live-escape-salisbury-salisbury-0o3j3lu",
+      "roomSlug": "the-brig-0rpej78"
+    },
+    {
+      "sourceId": 145,
+      "sourceRef": "csv:v1:944eeb64aa3809caf6e92cc6dca9ff252e6201200cabdda5360fdccb3ddfa3e2",
+      "venueSlug": "exit-60-newport-0kcmli8",
+      "roomSlug": "banged-up-1ybemqz"
+    },
+    {
+      "sourceId": 146,
+      "sourceRef": "csv:v1:8359bf1e8500fb6626bd741842aa8e5df129b2ac61a0cb2191fc53aea6b1913a",
+      "venueSlug": "exit-60-newport-0kcmli8",
+      "roomSlug": "redbeards-revenge-00z0p41"
+    },
+    {
+      "sourceId": 147,
+      "sourceRef": "csv:v1:760509bd8f02559deb5f0a8f3ace30efad78c503d94664128c993f3a7785c47a",
+      "venueSlug": "agent-brains-letchworth-079xqkf",
+      "roomSlug": "mobery-0dzt90t"
+    },
+    {
+      "sourceId": 148,
+      "sourceRef": "csv:v1:9ee523eeb4982c948c01d67820f0d31be5b9868a80e4313cf7d4f22d157a29ad",
+      "venueSlug": "puzzled-cardiff-0cms7ta",
+      "roomSlug": "abandon-ship-0mwoq9k"
+    },
+    {
+      "sourceId": 149,
+      "sourceRef": "csv:v1:9302197b14949e6fb28bd6cb4c3bd0ff8832433fa59c0d6411c1db62bd65cf31",
+      "venueSlug": "paradox-woking-1xrntin",
+      "roomSlug": "wizards-enigma-14gn0eg"
+    },
+    {
+      "sourceId": 150,
+      "sourceRef": "csv:v1:20a94397fad586c2f7af0059150a0c00525ae38f0756d4dbcd3b871c749d84dd",
+      "venueSlug": "puzzled-cardiff-0cms7ta",
+      "roomSlug": "ai-apocalypse-0l3mbyy"
+    },
+    {
+      "sourceId": 151,
+      "sourceRef": "csv:v1:1ad3d30ae6478593a1e41b2c492be79a2fa1639dcffb95e573a32691eb9f8109",
+      "venueSlug": "trapped-in-fiction-basingstoke-02dj0pc",
+      "roomSlug": "peter-pan-1gssi96"
+    },
+    {
+      "sourceId": 152,
+      "sourceRef": "csv:v1:80a46ef91cc04f4677cec795be3cb8164d481eefb590ececde7fc4209e9a9069",
+      "venueSlug": "puzzelogical-bracknell-0kkxdgs",
+      "roomSlug": "alien-01n5x9o"
+    },
+    {
+      "sourceId": 153,
+      "sourceRef": "csv:v1:0026eccc4456f6fd07f6495360910396957aad5bfcf3fa0bc0456724c4668337",
+      "venueSlug": "other-world-escapes-gosport-0e6ouhh",
+      "roomSlug": "the-seaside-1xnqpns"
+    },
+    {
+      "sourceId": 154,
+      "sourceRef": "csv:v1:e2b5359b0d5212c5a170a8d1baaae754f2ca8a51649d4c7d785c27406e44310b",
+      "venueSlug": "other-world-escapes-portsmouth-0ejtqm0",
+      "roomSlug": "xibalba-1xl3za4"
+    },
+    {
+      "sourceId": 155,
+      "sourceRef": "csv:v1:4702b1edeb038e686bef2c662dd567e0ce743c109d0ca9eb1e38bb49ab574d6d",
+      "venueSlug": "deadlocked-reading-1nfdj0d",
+      "roomSlug": "the-reading-witch-1w4wgbn"
+    },
+    {
+      "sourceId": 156,
+      "sourceRef": "csv:v1:2504e50cb05f98c5278338b25791654a4c5c7705129ab5eebbc42510d706e35f",
+      "venueSlug": "mindworks-worthing-1e5ulc3",
+      "roomSlug": "trapped-for-cash-08wun57"
+    },
+    {
+      "sourceId": 157,
+      "sourceRef": "csv:v1:668c5bcf1737fdc9e4475d5befbacf3ccb90be53755670ba5aa8f56e0c31577f",
+      "venueSlug": "pier-pressure-brighton-14bgfdh",
+      "roomSlug": "loot-the-lanes-1jrows7"
+    },
+    {
+      "sourceId": 158,
+      "sourceRef": "csv:v1:1ca421caf080d728685eb82bd3a9b0626096b72fd6b78c479210428aaf6092c1",
+      "venueSlug": "tempo-escape-room-bath-bath-1bex0ek",
+      "roomSlug": "eternal-life-1498kkk"
+    },
+    {
+      "sourceId": 159,
+      "sourceRef": "csv:v1:49d96390e600a2f843d672b62fc7eb7b7c6a31db07630f8818a36ae01f64dd7f",
+      "venueSlug": "knock-out-escape-rooms-reading-0zxqc3e",
+      "roomSlug": "loctopus-1ifacdc"
+    },
+    {
+      "sourceId": 160,
+      "sourceRef": "csv:v1:ac17a69b3ce13197690b65f714c06807cc1a4b2d4a177dc52c4eae0f971c60bf",
+      "venueSlug": "escapable-wakefield-1z12ton",
+      "roomSlug": "outatime-0n8zlrv"
+    },
+    {
+      "sourceId": 161,
+      "sourceRef": "csv:v1:52a9f49fff7c4acb4b0e320cc8a06e82d933e1ebab0d43d4e76fed9e18bb818e",
+      "venueSlug": "escaporium-halifax-0z5mkg8",
+      "roomSlug": "area-51-5-0yj9m8v"
+    },
+    {
+      "sourceId": 162,
+      "sourceRef": "csv:v1:3c0924ca6ca2b8c5dfb9439c1a04d6948e0181e3d5bb4d2ce33b17b48e4ae0c7",
+      "venueSlug": "escaporium-halifax-0z5mkg8",
+      "roomSlug": "operation-moonshine-0ebhv7e"
+    },
+    {
+      "sourceId": 163,
+      "sourceRef": "csv:v1:3cc68caefe749f39865c8e1918f1b75bec45d5e203bedfc22987206ca0b6fd12",
+      "venueSlug": "enigma-rooms-wakefield-0q4lhlg",
+      "roomSlug": "grimm-up-north-01frqzx"
+    },
+    {
+      "sourceId": 164,
+      "sourceRef": "csv:v1:165dfad9691f92e6e24153f55cebf5e533b23025459f499ef6c6403a6f89ef4e",
+      "venueSlug": "break-escape-nottingham-0120pz8",
+      "roomSlug": "robin-hood-1e1ctif"
+    }
+  ]
+}
