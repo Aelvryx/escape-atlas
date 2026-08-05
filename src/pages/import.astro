@@ -10,13 +10,13 @@ import Base from '../layouts/Base.astro';
   <header class="page-header import-page-header">
     <p class="eyebrow">Bring your history</p>
     <h1>Your spreadsheet is not the problem. Being trapped inside it is.</h1>
-    <p class="lede">Escape Atlas turns a CSV into a clean, portable room history. This first step is deliberately safe: inspect every normalized row, fix errors and download the clean result before connecting an account.</p>
+    <p class="lede">Escape Atlas turns a CSV into a clean, portable room history. Inspect every normalized row first, then use a passwordless account to save the valid result in one atomic import.</p>
   </header>
 
   <section class="import-principles" aria-label="Import process">
     <article><span>01</span><h3>Choose a CSV</h3><p>Use the template or bring a spreadsheet with familiar headings such as Room, Operator, Town and Played Date.</p></article>
     <article><span>02</span><h3>Review the dry run</h3><p>Dates, times, outcomes and defaults are normalized. Errors stay attached to the exact source row.</p></article>
-    <article><span>03</span><h3>Keep the clean result</h3><p>Download only the valid rows. Database import comes later, after the preview says exactly what will happen.</p></article>
+    <article><span>03</span><h3>Save when it is clean</h3><p>Download the valid rows or sign in by email and save them. Repeating the same import is safe.</p></article>
   </section>
 
   <CsvImportPreview />
@@ -24,8 +24,8 @@ import Base from '../layouts/Base.astro';
   <section class="section import-boundary" aria-labelledby="import-boundary-heading">
     <div>
       <p class="eyebrow">Current boundary</p>
-      <h2 id="import-boundary-heading">A real preflight, not a pretend upload button.</h2>
+      <h2 id="import-boundary-heading">Preflight first. One transaction second.</h2>
     </div>
-    <p>This prototype intentionally does not write to a database. Account connection comes after the importer can explain every decision it makes—so a messy spreadsheet cannot silently corrupt a decade of escape history.</p>
+    <p>The importer only sends rows that passed the visible checks. Supabase then upserts the complete batch atomically under the signed-in user, so a failure cannot leave half a history behind.</p>
   </section>
 </Base>

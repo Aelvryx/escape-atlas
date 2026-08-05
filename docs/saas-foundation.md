@@ -31,9 +31,9 @@ one-time migration.
 
 ## Next slice
 
-1. Provision the Supabase project and apply the migration.
-2. Add passwordless authentication.
-3. Connect the completed dry-run CSV importer to authenticated users.
+1. Provision the Supabase project and apply both migrations.
+2. Add the project URL and publishable key to Cloudflare Pages.
+3. Exercise passwordless authentication and the completed account-backed importer against the provisioned project.
 4. Import Anthony and Trenna's canonical history as the first profile.
 
 The static JSON remains authoritative until the import has been reconciled and
@@ -41,8 +41,23 @@ the profile output matches the current site.
 
 ## CSV preflight
 
-`/import/` now accepts a CSV entirely in the browser, maps common spreadsheet
+`/import/` accepts a CSV entirely in the browser, maps common spreadsheet
 headers, normalizes UK and ISO dates, parses escape times and outcomes, applies
 explicit defaults, detects possible duplicate visits, and attaches every error
 to its original source row. Valid rows can be downloaded in the canonical
-column order; no database write occurs yet.
+column order. When public Supabase configuration is present, the same page
+offers passwordless email sign-in and sends valid rows to `import_visits`.
+
+The RPC derives ownership from `auth.uid()`, creates or updates venues and
+rooms, and upserts visits by a stable CSV fingerprint. The complete batch runs
+inside one PostgreSQL transaction: either every valid row is saved or none is.
+
+## Environment
+
+Copy `.env.example` and provide:
+
+- `PUBLIC_SUPABASE_URL`
+- `PUBLIC_SUPABASE_PUBLISHABLE_KEY` (legacy `PUBLIC_SUPABASE_ANON_KEY` is also accepted)
+
+These values identify the public Supabase project; authorization remains in
+the user's passwordless session and database policies.
