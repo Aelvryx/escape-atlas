@@ -5,27 +5,27 @@ import Base from '../layouts/Base.astro';
 
 <Base
   title="Import your history"
-  description="Preview and validate an escape-room spreadsheet before importing it into Escape Atlas."
+  description="Preview and validate an escape-room spreadsheet locally, then download a clean normalized CSV."
 >
   <header class="page-header import-page-header">
     <p class="eyebrow">Bring your history</p>
     <h1>Your spreadsheet is not the problem. Being trapped inside it is.</h1>
-    <p class="lede">Escape Atlas turns a CSV into a clean, portable room history. Inspect every normalized row first, then use a passwordless account to save the valid result in one atomic import.</p>
+    <p class="lede">Escape Atlas turns a CSV into a clean, portable room history. Everything runs locally in the browser: inspect every normalized row, fix any errors, then download the valid result.</p>
   </header>
 
   <section class="import-principles" aria-label="Import process">
     <article><span>01</span><h3>Choose a CSV</h3><p>Use the template or bring a spreadsheet with familiar headings such as Room, Operator, Town and Played Date.</p></article>
     <article><span>02</span><h3>Review the dry run</h3><p>Dates, times, outcomes and defaults are normalized. Errors stay attached to the exact source row.</p></article>
-    <article><span>03</span><h3>Save when it is clean</h3><p>Download the valid rows or sign in by email and save them. Repeating the same import is safe.</p></article>
+    <article><span>03</span><h3>Keep the clean copy</h3><p>Download the valid rows in a stable column order. The source file never leaves your device.</p></article>
   </section>
 
   <CsvImportPreview />
 
   <section class="section import-boundary" aria-labelledby="import-boundary-heading">
     <div>
-      <p class="eyebrow">Current boundary</p>
-      <h2 id="import-boundary-heading">Preflight first. One transaction second.</h2>
+      <p class="eyebrow">Deliberate boundary</p>
+      <h2 id="import-boundary-heading">A useful static tool, not a half-built account system.</h2>
     </div>
-    <p>The importer only sends rows that passed the visible checks. Supabase then upserts the complete batch atomically under the signed-in user, so a failure cannot leave half a history behind.</p>
+    <p>This site remains Anthony and Trenna's public archive and planning companion. Any future multi-user product will be designed as a separate application rather than grafted onto this Cloudflare Pages site.</p>
   </section>
 </Base>

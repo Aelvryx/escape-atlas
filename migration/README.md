@@ -1,27 +1,22 @@
-# Canonical history migration
+# Canonical history export
 
 These artifacts are generated from `src/data/rooms.json`, which remains the
-authoritative Escape Atlas history until a live Supabase import is reconciled.
+authoritative Escape Atlas history.
 
 Run:
 
 ```sh
-npm run migration:canonical
+npm run history:export
 ```
 
 This deterministically produces:
 
 - `canonical-history.csv` — the same 164 rows accepted by the browser preflight;
-- `canonical-history.sql` — the normalized JSON payload passed to the atomic
-  authenticated `import_visits` RPC;
 - `canonical-history.manifest.json` — source and artifact checksums, expected
-  database counts, explicit legacy substitutions, and the source-ID-to-import
-  fingerprint map.
+  record counts, explicit legacy substitutions and the source-ID mapping.
 
-`npm run migration:verify` regenerates the data in memory and fails if any
-committed artifact has drifted. The full SQL payload is also imported twice in
-CI against PostgreSQL 17, proving both exact reconciliation counts and
-idempotency.
+`npm run history:verify` regenerates the data in memory and fails if any
+committed artifact has drifted.
 
 ## Lossless legacy handling
 

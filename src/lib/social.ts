@@ -23,10 +23,10 @@ export const socialCards = [
     eyebrow: 'ESCAPE ATLAS',
     titleLines: ['A better home for', 'every escape.'],
     subtitle: 'Bring the spreadsheet. Keep the story. Plan the next room.',
-    metric: '£0 · £3 · £8',
-    metricLabel: 'simple early-access plans',
-    highlights: ['Public profiles', 'CSV import', 'Trip planning'],
-    alt: 'Escape Atlas — a better home for every escape, with public profiles, CSV import and trip planning.',
+    metric: String(profileStats.rooms),
+    metricLabel: 'rooms in the living archive',
+    highlights: ['Public history', 'CSV cleanup', 'Trip planning'],
+    alt: 'Escape Atlas — Anthony and Trenna’s public escape-room history, with CSV cleanup and trip planning.',
   },
   {
     id: 'profile',
@@ -52,6 +52,6 @@ export const profileSocialCard = socialCards[1];
 export const profileShare = {
   title: `${publicProfile.displayName} on Escape Atlas`,
   text: `${publicProfile.displayName} have logged ${profileStats.rooms} escape rooms across ${profileStats.locations} locations. Explore their Escape Atlas.`,
-  url: `${escapeAtlasOrigin}/u/${publicProfile.slug}/?utm_source=profile_share&utm_medium=web_share&utm_campaign=early_access`,
+  url: `${escapeAtlasOrigin}/u/${publicProfile.slug}/?utm_source=profile_share&utm_medium=web_share&utm_campaign=shared_history`,
   cardPath: profileSocialCard.publicPath,
 } as const;

@@ -6,7 +6,6 @@ import {
   type ImportPreview,
   type NormalizedImportRow,
 } from './csv-import';
-import { buildPersistedImportRows, type PersistedImportRow } from './import-persistence';
 
 export interface CanonicalHistorySubstitution {
   sourceId: number;
@@ -17,7 +16,6 @@ export interface CanonicalHistorySubstitution {
 export interface CanonicalHistoryExport {
   csv: string;
   preview: ImportPreview;
-  payload: PersistedImportRow[];
   substitutions: CanonicalHistorySubstitution[];
 }
 
@@ -77,16 +75,9 @@ export async function buildCanonicalHistoryExport(rooms: Room[]): Promise<Canoni
     );
   }
 
-  const payload = await buildPersistedImportRows(preview);
-  const sourceRefs = new Set(payload.map((row) => row.source_ref));
-  if (payload.length !== rooms.length || sourceRefs.size !== rooms.length) {
-    throw new Error(`Canonical history produced ${payload.length} payload rows and ${sourceRefs.size} unique references.`);
-  }
-
   return {
     csv,
     preview,
-    payload,
     substitutions: canonicalHistorySubstitutions(rooms),
   };
 }
