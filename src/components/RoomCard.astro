@@ -1,6 +1,7 @@
 ---
 import type { Room } from '../lib/rooms';
 import { formatDate, formatDuration, roomSlug, roomTitle } from '../lib/rooms';
+import { venueProfileForRoom } from '../lib/venues';
 
 interface Props {
   room: Room;
@@ -8,6 +9,7 @@ interface Props {
 }
 
 const { room, compact = false } = Astro.props;
+const venue = venueProfileForRoom(room);
 ---
 
 <article class:list={['room-card', { compact }]} data-room-card>
@@ -18,7 +20,11 @@ const { room, compact = false } = Astro.props;
       <span>{room.location}</span>
     </div>
     <h3><a href={`/room/${roomSlug(room)}/`}>{roomTitle(room)}</a></h3>
-    <p class="room-card__venue">{room.venue ?? 'Venue unknown'}</p>
+    <p class="room-card__venue">
+      {venue
+        ? <a href={`/venue/${venue.slug}/`}>{venue.name}</a>
+        : 'Venue unknown'}
+    </p>
     {!compact && (
       <div class="room-card__facts">
         <span>{room.completionTime ? `Escaped in ${formatDuration(room.completionTime)}` : 'Finish time unknown'}</span>

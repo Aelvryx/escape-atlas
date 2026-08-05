@@ -9,6 +9,7 @@ Target: [atlas.mei.place](https://atlas.mei.place)
 - A validated canonical history of 164 completed rooms from 2015–2026.
 - A searchable and filterable history.
 - Individual room pages that preserve unknown source fields honestly.
+- A searchable operator directory with generated venue histories and location trails.
 - Evidence-safe statistics and frequency summaries.
 - A public-safe upcoming-room snapshot derived from Mei's authoritative Fastmail calendar.
 

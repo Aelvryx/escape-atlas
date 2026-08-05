@@ -82,12 +82,17 @@ export function roomPhotoCaption(room: Room): string | null {
 }
 
 function countBy(values: Array<string | null>): Array<{ label: string; count: number }> {
-  const counts = new Map<string, number>();
+  const counts = new Map<string, { label: string; count: number }>();
   for (const value of values) {
-    if (value) counts.set(value, (counts.get(value) ?? 0) + 1);
+    if (!value) continue;
+    const key = slugify(value);
+    const existing = counts.get(key);
+    counts.set(key, {
+      label: value,
+      count: (existing?.count ?? 0) + 1,
+    });
   }
-  return [...counts.entries()]
-    .map(([label, count]) => ({ label, count }))
+  return [...counts.values()]
     .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
 }
 

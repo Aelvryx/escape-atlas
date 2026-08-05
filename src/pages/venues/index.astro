@@ -1,0 +1,122 @@
+---
+import StatCard from '../../components/StatCard.astro';
+import VenueCard from '../../components/VenueCard.astro';
+import Base from '../../layouts/Base.astro';
+import { locations, rooms, slugify } from '../../lib/rooms';
+import { venueProfiles } from '../../lib/venues';
+
+const multiLocationOperators = venueProfiles.filter((venue) => venue.locations.length > 1).length;
+const repeatOperators = venueProfiles.filter((venue) => venue.visits > 1).length;
+const mappedRooms = rooms.filter((room) => room.venue).length;
+---
+
+<Base
+  title="Venues"
+  description={`Browse ${venueProfiles.length} escape-room operators across ${locations.length} locations, drawn from Anthony and Trenna's canonical history.`}
+  eyebrow="Operator atlas"
+>
+  <header class="page-header venue-directory-header">
+    <h1>{venueProfiles.length} operators, mapped.</h1>
+    <p class="lede">A browsable trail of the companies behind every recorded room: where they operate, how often we returned and every game attached to them.</p>
+  </header>
+
+  <section class="stats-grid venue-directory-stats" aria-label="Venue directory summary">
+    <StatCard value={venueProfiles.length} label="known operators" detail={`${mappedRooms} rooms mapped to them`} />
+    <StatCard value={locations.length} label="locations explored" detail="towns, cities and trips abroad" />
+    <StatCard value={repeatOperators} label="operators revisited" detail="more than one room played" />
+    <StatCard value={multiLocationOperators} label="multi-location operators" detail="followed across the map" />
+  </section>
+
+  <section class="section" aria-labelledby="venue-list-heading">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Find familiar coordinates</p>
+        <h2 id="venue-list-heading">Browse the operators.</h2>
+      </div>
+      <p>Search by operator, town or game, or narrow the map to one location.</p>
+    </div>
+
+    <div class="filters venue-filters">
+      <label>
+        Search
+        <input id="venue-search" type="search" placeholder="Operator, location or room…" autocomplete="off" />
+      </label>
+      <label>
+        Location
+        <select id="venue-location">
+          <option value="">All locations</option>
+          {[...locations]
+            .sort((a, b) => a.label.localeCompare(b.label))
+            .map((location) => <option value={slugify(location.label)}>{location.label}</option>)}
+        </select>
+      </label>
+    </div>
+
+    <p class="results-line" id="venue-count">Showing all {venueProfiles.length} operators</p>
+
+    <div class="venue-grid" id="venue-grid">
+      {venueProfiles.map((venue) => (
+        <div
+          data-venue-item
+          data-search={[
+            venue.name,
+            ...venue.locations.map((location) => location.label),
+            ...venue.rooms.map((room) => room.game),
+          ].filter(Boolean).join(' ').toLowerCase()}
+          data-locations={venue.locations.map((location) => slugify(location.label)).join(' ')}
+        >
+          <VenueCard venue={venue} />
+        </div>
+      ))}
+    </div>
+
+    <div class="empty-state" id="venue-empty" hidden>
+      <h2>No operator at those coordinates.</h2>
+      <p>Try a broader search or reset the location filter.</p>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const search = document.querySelector<HTMLInputElement>('#venue-search');
+  const locationFilter = document.querySelector<HTMLSelectElement>('#venue-location');
+  const count = document.querySelector<HTMLElement>('#venue-count');
+  const empty = document.querySelector<HTMLElement>('#venue-empty');
+  const items = [...document.querySelectorAll<HTMLElement>('[data-venue-item]')];
+
+  function applyFilters(updateAddress = true) {
+    const query = search?.value.trim().toLowerCase() ?? '';
+    const selectedLocation = locationFilter?.value ?? '';
+    let visible = 0;
+
+    for (const item of items) {
+      const itemLocations = item.dataset.locations?.split(' ') ?? [];
+      const matches = (!query || item.dataset.search?.includes(query))
+        && (!selectedLocation || itemLocations.includes(selectedLocation));
+      item.hidden = !matches;
+      if (matches) visible += 1;
+    }
+
+    if (count) count.textContent = visible === items.length
+      ? `Showing all ${visible} operators`
+      : `Showing ${visible} of ${items.length} operators`;
+    if (empty) empty.hidden = visible !== 0;
+
+    if (updateAddress) {
+      const address = new URL(window.location.href);
+      query ? address.searchParams.set('q', query) : address.searchParams.delete('q');
+      selectedLocation
+        ? address.searchParams.set('location', selectedLocation)
+        : address.searchParams.delete('location');
+      window.history.replaceState({}, '', address);
+    }
+  }
+
+  const initial = new URLSearchParams(window.location.search);
+  if (search) search.value = initial.get('q') ?? '';
+  if (locationFilter) locationFilter.value = initial.get('location') ?? '';
+  applyFilters(false);
+
+  search?.addEventListener('input', () => applyFilters());
+  locationFilter?.addEventListener('change', () => applyFilters());
+</script>

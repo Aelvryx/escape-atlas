@@ -1,0 +1,33 @@
+---
+import { formatDate } from '../lib/rooms';
+import type { VenueProfile } from '../lib/venues';
+
+interface Props {
+  venue: VenueProfile;
+}
+
+const { venue } = Astro.props;
+const locationLabel = venue.locations.map((location) => location.label).join(' · ');
+---
+
+<a class="venue-card" href={`/venue/${venue.slug}/`}>
+  <article>
+    <div class="venue-card__topline">
+      <p class="eyebrow">{venue.locations.length === 1 ? 'One coordinate' : `${venue.locations.length} coordinates`}</p>
+      <span>{venue.visits} {venue.visits === 1 ? 'room' : 'rooms'}</span>
+    </div>
+    <h2>{venue.name}</h2>
+    <p class="venue-card__locations">{locationLabel}</p>
+    <dl class="venue-card__facts">
+      <div>
+        <dt>First visit</dt>
+        <dd>{formatDate(venue.firstVisit.date, { month: 'short', year: 'numeric', day: undefined })}</dd>
+      </div>
+      <div>
+        <dt>Latest visit</dt>
+        <dd>{formatDate(venue.latestVisit.date, { month: 'short', year: 'numeric', day: undefined })}</dd>
+      </div>
+    </dl>
+    <span class="venue-card__link">Open venue history <span aria-hidden="true">↗</span></span>
+  </article>
+</a>

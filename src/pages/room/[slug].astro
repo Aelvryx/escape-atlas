@@ -9,6 +9,7 @@ import {
   roomTitle,
   type Room,
 } from '../../lib/rooms';
+import { venueProfileForRoom } from '../../lib/venues';
 
 export function getStaticPaths() {
   return rooms.map((room, index) => ({
@@ -30,6 +31,7 @@ interface Props {
 const { room, previous, next } = Astro.props;
 const title = roomTitle(room);
 const photoCaption = roomPhotoCaption(room);
+const venue = venueProfileForRoom(room);
 ---
 
 <Base title={title} description={`Room #${room.id}: ${title}, ${room.venue ?? 'venue unknown'}, ${room.location}.`} eyebrow="A point on the map">
@@ -37,7 +39,9 @@ const photoCaption = roomPhotoCaption(room);
     <article class="room-detail__main">
       <p class="room-number-large">ROOM {String(room.id).padStart(3, '0')}</p>
       <h1>{title}</h1>
-      <p class="lede">{room.venue ?? 'Venue unknown'} · {room.location}</p>
+      <p class="lede">
+        {venue ? <a class="venue-inline-link" href={`/venue/${venue.slug}/`}>{venue.name}</a> : 'Venue unknown'} · {room.location}
+      </p>
       {room.publicNote && <p>{room.publicNote}</p>}
       {room.sourceFlags.includes('duplicate-core-fields') && (
         <p class="quiet">One of two separate games played here on the same day. Their names have been lost to history.</p>
@@ -61,7 +65,7 @@ const photoCaption = roomPhotoCaption(room);
       <dl class="fact-list">
         <div><dt>Date</dt><dd>{formatDate(room.date)}</dd></div>
         <div><dt>Location</dt><dd>{room.location}</dd></div>
-        <div><dt>Venue</dt><dd>{room.venue ?? 'Unknown'}</dd></div>
+        <div><dt>Venue</dt><dd>{venue ? <a href={`/venue/${venue.slug}/`}>{venue.name}</a> : 'Unknown'}</dd></div>
         <div><dt>Escape time</dt><dd>{formatDuration(room.completionTime)}</dd></div>
         <div><dt>Players</dt><dd>{room.players}</dd></div>
         <div><dt>Game length</dt><dd>{room.allottedMinutes} min</dd></div>

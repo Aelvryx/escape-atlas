@@ -8,9 +8,9 @@ import {
   roomsNewestFirst,
   shortestRecorded,
   stats,
-  venues,
   years,
 } from '../lib/rooms';
+import { venueProfiles } from '../lib/venues';
 
 const maxYearCount = Math.max(...years.map((year) => year.count));
 ---
@@ -23,6 +23,7 @@ const maxYearCount = Math.max(...years.map((year) => year.count));
       <p class="lede">A living record of {stats.total} escape rooms, {stats.locations} places and a frankly unreasonable commitment to seeing what is behind the next door.</p>
       <div class="hero-actions">
         <a class="button" href="/history/">Explore the full history <span aria-hidden="true">→</span></a>
+        <a class="button button--ghost" href="/venues/">Browse the venues</a>
         <a class="button button--ghost" href="/u/anthony-and-trenna/">View the public profile</a>
         <a class="button button--ghost" href="/upcoming/">See what is next</a>
       </div>
@@ -77,7 +78,9 @@ const maxYearCount = Math.max(...years.map((year) => year.count));
       <article class="rank-list">
         <h3>Most-visited venues</h3>
         <ol>
-          {venues.slice(0, 7).map((item) => <li><span>{item.label}</span><span>{item.count}</span></li>)}
+          {venueProfiles.slice(0, 7).map((venue) => (
+            <li><a href={`/venue/${venue.slug}/`}>{venue.name}</a><span>{venue.visits}</span></li>
+          ))}
         </ol>
       </article>
     </div>
