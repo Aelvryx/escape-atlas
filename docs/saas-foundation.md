@@ -33,8 +33,16 @@ one-time migration.
 
 1. Provision the Supabase project and apply the migration.
 2. Add passwordless authentication.
-3. Build a dry-run CSV importer that previews errors before inserting anything.
+3. Connect the completed dry-run CSV importer to authenticated users.
 4. Import Anthony and Trenna's canonical history as the first profile.
 
 The static JSON remains authoritative until the import has been reconciled and
 the profile output matches the current site.
+
+## CSV preflight
+
+`/import/` now accepts a CSV entirely in the browser, maps common spreadsheet
+headers, normalizes UK and ISO dates, parses escape times and outcomes, applies
+explicit defaults, detects possible duplicate visits, and attaches every error
+to its original source row. Valid rows can be downloaded in the canonical
+column order; no database write occurs yet.

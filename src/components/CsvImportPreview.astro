@@ -1,0 +1,210 @@
+<section class="import-workspace" aria-labelledby="import-workspace-heading">
+  <div class="import-workspace__heading">
+    <div>
+      <p class="eyebrow">Dry-run workspace</p>
+      <h2 id="import-workspace-heading">See the result before anything is saved.</h2>
+    </div>
+    <a class="text-link" href="/templates/escape-atlas-import.csv" download>Download CSV template <span aria-hidden="true">↓</span></a>
+  </div>
+
+  <label class="import-dropzone" id="import-dropzone">
+    <input id="import-file" type="file" accept=".csv,text/csv" />
+    <span class="import-dropzone__mark" aria-hidden="true">↥</span>
+    <strong>Drop a CSV here, or choose a file</strong>
+    <span>Date, location, venue and game are required. Familiar spreadsheet headings are recognised automatically.</span>
+  </label>
+
+  <div class="import-actions">
+    <button class="button button--ghost" id="load-import-example" type="button">Try the example file</button>
+    <p><span aria-hidden="true">◎</span> Previewed entirely in your browser. Nothing is uploaded.</p>
+  </div>
+
+  <div class="import-results" id="import-results" hidden>
+    <div class="import-result-header">
+      <div>
+        <p class="eyebrow">Import report</p>
+        <h3 id="import-file-name">CSV preview</h3>
+      </div>
+      <button class="button" id="download-clean-csv" type="button" hidden>Download clean CSV <span aria-hidden="true">↓</span></button>
+    </div>
+
+    <div class="import-summary" aria-live="polite">
+      <article><strong id="import-total">0</strong><span>rows found</span></article>
+      <article class="import-summary--good"><strong id="import-valid">0</strong><span>ready to import</span></article>
+      <article class="import-summary--bad"><strong id="import-invalid">0</strong><span>need a fix</span></article>
+      <article class="import-summary--warn"><strong id="import-warnings">0</strong><span>warnings</span></article>
+    </div>
+
+    <div class="import-header-report">
+      <div><span>Recognised</span><p id="import-recognized-headers">—</p></div>
+      <div id="import-ignored-wrap" hidden><span>Ignored</span><p id="import-ignored-headers">—</p></div>
+    </div>
+
+    <section class="import-issues" id="import-issues-wrap" aria-labelledby="import-issues-heading" hidden>
+      <div class="import-subheading">
+        <h3 id="import-issues-heading">What needs attention</h3>
+        <p id="import-issues-count"></p>
+      </div>
+      <ul id="import-issues-list"></ul>
+    </section>
+
+    <section class="import-preview-table" id="import-table-wrap" aria-labelledby="import-preview-heading" hidden>
+      <div class="import-subheading">
+        <h3 id="import-preview-heading">Normalized preview</h3>
+        <p>Showing up to the first 200 rows.</p>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr><th>CSV row</th><th>Status</th><th>Date</th><th>Room</th><th>Time</th><th>Players</th></tr>
+          </thead>
+          <tbody id="import-preview-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</section>
+
+<script>
+  import { exportValidRowsCsv, previewEscapeAtlasCsv, type ImportPreview } from '../lib/csv-import';
+
+  const input = document.querySelector<HTMLInputElement>('#import-file');
+  const dropzone = document.querySelector<HTMLElement>('#import-dropzone');
+  const exampleButton = document.querySelector<HTMLButtonElement>('#load-import-example');
+  const results = document.querySelector<HTMLElement>('#import-results');
+  const cleanCsvButton = document.querySelector<HTMLButtonElement>('#download-clean-csv');
+  let currentPreview: ImportPreview | null = null;
+
+  function setText(selector: string, value: string | number): void {
+    const element = document.querySelector<HTMLElement>(selector);
+    if (element) element.textContent = String(value);
+  }
+
+  function renderIssues(preview: ImportPreview): void {
+    const wrapper = document.querySelector<HTMLElement>('#import-issues-wrap');
+    const list = document.querySelector<HTMLUListElement>('#import-issues-list');
+    if (!wrapper || !list) return;
+
+    list.replaceChildren();
+    wrapper.hidden = preview.issues.length === 0;
+    setText('#import-issues-count', `${preview.errors} errors · ${preview.warnings} warnings`);
+
+    for (const issue of preview.issues.slice(0, 50)) {
+      const item = document.createElement('li');
+      item.className = `import-issue import-issue--${issue.severity}`;
+      const badge = document.createElement('span');
+      badge.textContent = issue.severity;
+      const message = document.createElement('p');
+      const coordinate = issue.row ? `Row ${issue.row}${issue.field ? ` · ${issue.field}` : ''}: ` : '';
+      message.textContent = coordinate + issue.message;
+      item.append(badge, message);
+      list.append(item);
+    }
+
+    if (preview.issues.length > 50) {
+      const remainder = document.createElement('li');
+      remainder.className = 'import-issue import-issue--more';
+      remainder.textContent = `${preview.issues.length - 50} more issues are not shown here.`;
+      list.append(remainder);
+    }
+  }
+
+  function renderRows(preview: ImportPreview): void {
+    const wrapper = document.querySelector<HTMLElement>('#import-table-wrap');
+    const body = document.querySelector<HTMLTableSectionElement>('#import-preview-body');
+    if (!wrapper || !body) return;
+
+    body.replaceChildren();
+    wrapper.hidden = preview.rows.length === 0;
+
+    for (const row of preview.rows.slice(0, 200)) {
+      const tableRow = document.createElement('tr');
+      const status = document.createElement('span');
+      status.className = `import-status import-status--${row.valid ? 'valid' : 'invalid'}`;
+      status.textContent = row.valid ? (row.issues.length ? 'Ready · warning' : 'Ready') : 'Fix row';
+
+      const values: Array<string | Node> = [
+        String(row.sourceRow),
+        status,
+        row.normalized.date || '—',
+        `${row.normalized.venue || 'Unknown venue'} · ${row.normalized.game || 'Unknown game'}`,
+        row.normalized.completion_time || '—',
+        String(row.normalized.players),
+      ];
+
+      for (const value of values) {
+        const cell = document.createElement('td');
+        if (typeof value === 'string') cell.textContent = value;
+        else cell.append(value);
+        tableRow.append(cell);
+      }
+      body.append(tableRow);
+    }
+  }
+
+  function renderPreview(preview: ImportPreview, fileName: string): void {
+    currentPreview = preview;
+    if (results) results.hidden = false;
+    setText('#import-file-name', fileName);
+    setText('#import-total', preview.totalRows);
+    setText('#import-valid', preview.validRows);
+    setText('#import-invalid', preview.invalidRows);
+    setText('#import-warnings', preview.warnings);
+    setText('#import-recognized-headers', preview.recognizedHeaders.join(', ') || 'None');
+
+    const ignoredWrap = document.querySelector<HTMLElement>('#import-ignored-wrap');
+    if (ignoredWrap) ignoredWrap.hidden = preview.ignoredHeaders.length === 0;
+    setText('#import-ignored-headers', preview.ignoredHeaders.join(', ') || 'None');
+
+    if (cleanCsvButton) cleanCsvButton.hidden = preview.validRows === 0;
+    renderIssues(preview);
+    renderRows(preview);
+    results?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  async function processFile(file: File): Promise<void> {
+    const csv = await file.text();
+    renderPreview(previewEscapeAtlasCsv(csv), file.name);
+  }
+
+  input?.addEventListener('change', () => {
+    const file = input.files?.[0];
+    if (file) void processFile(file);
+  });
+
+  for (const eventName of ['dragenter', 'dragover']) {
+    dropzone?.addEventListener(eventName, (event) => {
+      event.preventDefault();
+      dropzone.classList.add('is-dragging');
+    });
+  }
+
+  for (const eventName of ['dragleave', 'drop']) {
+    dropzone?.addEventListener(eventName, (event) => {
+      event.preventDefault();
+      dropzone.classList.remove('is-dragging');
+    });
+  }
+
+  dropzone?.addEventListener('drop', (event) => {
+    const file = (event as DragEvent).dataTransfer?.files[0];
+    if (file) void processFile(file);
+  });
+
+  exampleButton?.addEventListener('click', async () => {
+    const response = await fetch('/templates/escape-atlas-import.csv');
+    const csv = await response.text();
+    renderPreview(previewEscapeAtlasCsv(csv), 'escape-atlas-import.csv');
+  });
+
+  cleanCsvButton?.addEventListener('click', () => {
+    if (!currentPreview) return;
+    const blob = new Blob([exportValidRowsCsv(currentPreview)], { type: 'text/csv;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'escape-atlas-clean.csv';
+    link.click();
+    URL.revokeObjectURL(url);
+  });
+</script>
