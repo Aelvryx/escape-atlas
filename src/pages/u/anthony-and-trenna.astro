@@ -1,5 +1,6 @@
 ---
 import RoomCard from '../../components/RoomCard.astro';
+import ProfileShare from '../../components/ProfileShare.astro';
 import StatCard from '../../components/StatCard.astro';
 import Base from '../../layouts/Base.astro';
 import { years } from '../../lib/rooms';
@@ -9,6 +10,7 @@ import {
   publicProfile,
   recentProfileRooms,
 } from '../../lib/profile';
+import { profileSocialCard } from '../../lib/social';
 
 const maxYearCount = Math.max(...years.map((year) => year.count));
 ---
@@ -16,6 +18,9 @@ const maxYearCount = Math.max(...years.map((year) => year.count));
 <Base
   title={`${publicProfile.displayName} profile`}
   description={`${publicProfile.displayName}'s public Escape Atlas profile: ${profileStats.rooms} rooms across ${profileStats.locations} locations.`}
+  socialImage={profileSocialCard.publicPath}
+  socialImageAlt={profileSocialCard.alt}
+  socialType="profile"
 >
   <section class="profile-hero" aria-labelledby="profile-name">
     <div class="profile-avatar" aria-hidden="true">{publicProfile.initials}</div>
@@ -31,6 +36,8 @@ const maxYearCount = Math.max(...years.map((year) => year.count));
       </ul>
     </div>
   </section>
+
+  <ProfileShare />
 
   <section class="section" aria-labelledby="profile-numbers-heading">
     <div class="section-heading">

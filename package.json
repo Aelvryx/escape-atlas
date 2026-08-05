@@ -9,11 +9,13 @@
     "preview": "astro preview",
     "validate": "node scripts/validate-data.mjs",
     "test": "tsx --test tests/*.test.ts",
-    "check": "npm run validate && npm run migration:verify && npm test && astro check && astro build",
+    "check": "npm run validate && npm run migration:verify && npm run social:verify && npm test && astro check && astro build",
     "migration:canonical": "tsx scripts/export-canonical-history.ts",
     "migration:verify": "tsx scripts/export-canonical-history.ts --check",
     "import:history": "node scripts/import-reference.mjs",
-    "generate:upcoming": "node scripts/generate-upcoming.mjs"
+    "generate:upcoming": "node scripts/generate-upcoming.mjs",
+    "social:generate": "tsx scripts/generate-social-cards.ts",
+    "social:verify": "tsx scripts/generate-social-cards.ts --check"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.0",
@@ -23,6 +25,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.6",
     "@types/papaparse": "^5.5.2",
+    "sharp": "^0.35.3",
     "tsx": "^4.23.7",
     "typescript": "^5.9.3"
   }

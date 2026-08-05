@@ -1354,6 +1354,50 @@ h3 {
   font-weight: 600;
 }
 
+.profile-share {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 2rem;
+  align-items: end;
+  margin-top: 1.4rem;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border: 1px solid rgba(244, 184, 96, 0.28);
+  border-radius: 1.3rem;
+  background:
+    radial-gradient(circle at 95% 0%, rgba(244, 184, 96, 0.12), transparent 45%),
+    linear-gradient(145deg, rgba(25, 43, 47, 0.9), rgba(9, 16, 20, 0.96));
+}
+
+.profile-share h2 {
+  margin-bottom: 0.7rem;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+}
+
+.profile-share > div > p:last-child {
+  max-width: 680px;
+  margin-bottom: 0;
+  color: var(--ink-soft);
+}
+
+.profile-share__actions {
+  display: grid;
+  gap: 0.75rem;
+  justify-items: stretch;
+  min-width: 14rem;
+}
+
+.profile-share__actions .button {
+  width: 100%;
+}
+
+.profile-share__status {
+  max-width: 18rem;
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: 0.75rem;
+  line-height: 1.45;
+}
+
 .fingerprint-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -2340,9 +2384,18 @@ h3 {
 
   .site-footer,
   .section-heading,
-  .profile-cta {
+  .profile-cta,
+  .profile-share {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .profile-share {
+    display: flex;
+  }
+
+  .profile-share__actions {
+    width: 100%;
   }
 
   .profile-hero {
