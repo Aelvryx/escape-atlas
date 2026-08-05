@@ -1,0 +1,147 @@
+---
+import RoomCard from '../../components/RoomCard.astro';
+import StatCard from '../../components/StatCard.astro';
+import Base from '../../layouts/Base.astro';
+import {
+  buildLocationConnections,
+  locationProfiles,
+  type LocationProfile,
+} from '../../lib/locations';
+import { formatDate, roomSlug, roomTitle } from '../../lib/rooms';
+
+export function getStaticPaths() {
+  return locationProfiles.map((location) => ({
+    params: { slug: location.slug },
+    props: { location },
+  }));
+}
+
+interface Props {
+  location: LocationProfile;
+}
+
+const { location } = Astro.props;
+const connections = buildLocationConnections(location).slice(0, 6);
+const busiestCount = location.busiestDay.rooms.length;
+---
+
+<Base
+  title={location.name}
+  description={`${location.name}: ${location.visits} completed escape rooms across ${location.operators.length} known operators in Anthony and Trenna's Escape Atlas history.`}
+  eyebrow="Location coordinates"
+>
+  <a class="text-link venue-back-link" href="/locations/"><span aria-hidden="true">←</span> All locations</a>
+
+  <header class="location-hero">
+    <div>
+      <p class="eyebrow">{location.visitDays.length} {location.visitDays.length === 1 ? 'recorded day' : 'recorded days'}</p>
+      <h1>{location.name}</h1>
+      <p class="lede">We have logged {location.visits} {location.visits === 1 ? 'room' : 'rooms'} here with {location.operators.length} known {location.operators.length === 1 ? 'operator' : 'operators'}, from {formatDate(location.firstVisit.date)} to {formatDate(location.latestVisit.date)}.</p>
+      <div class="hero-actions">
+        <a class="button" href={`/locations/?trip=${location.slug}#trip-planner`}>Start a route here <span aria-hidden="true">→</span></a>
+        <a class="button button--ghost" href={`/venues/?location=${location.slug}`}>Browse local operators</a>
+      </div>
+    </div>
+    <aside class="location-hero__stamp" aria-label={`${location.visits} rooms recorded in ${location.name}`}>
+      <span>Rooms logged</span>
+      <strong>{location.visits}</strong>
+      <small>{busiestCount > 1 ? `${busiestCount}-room day proven` : 'one-room stop recorded'}</small>
+    </aside>
+  </header>
+
+  <section class="stats-grid location-detail-stats" aria-label="Location history summary">
+    <StatCard value={location.operators.length} label="known operators" detail={`${location.visits} rooms between them`} />
+    <StatCard value={location.visitDays.length} label="recorded days" detail={location.visitDays.length > 1 ? 'return trips included' : 'one visit so far'} />
+    <StatCard value={busiestCount} label="rooms in busiest day" detail={formatDate(location.busiestDay.date)} />
+    <StatCard value={location.recordedTimes} label="recorded finishes" detail={`${location.photoCount} team ${location.photoCount === 1 ? 'photo' : 'photos'}`} />
+  </section>
+
+  <section class="section" aria-labelledby="location-operators-heading">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Local field notes</p>
+        <h2 id="location-operators-heading">Operators encountered here.</h2>
+      </div>
+      <p>Every operator is linked to its full atlas history, including rooms played in other locations.</p>
+    </div>
+    {location.operators.length ? (
+      <div class="location-operator-grid">
+        {location.operators.map((operator) => (
+          <article class="location-operator-card">
+            <div class="location-operator-card__topline">
+              <p class="eyebrow">{operator.visits} {operator.visits === 1 ? 'room here' : 'rooms here'}</p>
+              <span>Latest {formatDate(operator.rooms[0].date, { day: undefined, month: 'short', year: 'numeric' })}</span>
+            </div>
+            <h3><a href={`/venue/${operator.venue.slug}/`}>{operator.venue.name}</a></h3>
+            <p>{operator.rooms.map((room) => roomTitle(room)).join(' · ')}</p>
+            <a class="text-link" href={`/venue/${operator.venue.slug}/`}>Open operator history <span aria-hidden="true">↗</span></a>
+          </article>
+        ))}
+      </div>
+    ) : (
+      <div class="empty-state">
+        <h2>The operator name was lost.</h2>
+        <p>The room remains in the location history without inventing a company.</p>
+      </div>
+    )}
+  </section>
+
+  <section class="section" aria-labelledby="visit-days-heading">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Evidence for the itinerary</p>
+        <h2 id="visit-days-heading">Every recorded day.</h2>
+      </div>
+      <p>Useful trip shape from the archive: how many rooms fitted into each day and which doors made the route.</p>
+    </div>
+    <div class="visit-day-list">
+      {location.visitDays.map((day) => (
+        <article class="visit-day">
+          <div>
+            <time datetime={day.date}>{formatDate(day.date)}</time>
+            <strong>{day.rooms.length} {day.rooms.length === 1 ? 'room' : 'rooms'}</strong>
+          </div>
+          <ul>
+            {day.rooms.map((room) => (
+              <li><a href={`/room/${roomSlug(room)}/`}>{roomTitle(room)}</a><span>{room.venue ?? 'Unknown operator'}</span></li>
+            ))}
+          </ul>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  {connections.length > 0 && (
+    <section class="section" aria-labelledby="route-connections-heading">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Previous route connections</p>
+          <h2 id="route-connections-heading">Stops already paired nearby in time.</h2>
+        </div>
+        <p>Places appearing on the same day or the day before or after this location in the recorded history—not a claim about travel distance.</p>
+      </div>
+      <div class="route-connection-grid">
+        {connections.map((connection) => (
+          <a class="route-connection" href={`/locations/?trip=${location.slug},${connection.slug}#trip-planner`}>
+            <span class="eyebrow">{connection.recordedRuns} recorded {connection.recordedRuns === 1 ? 'run' : 'runs'}</span>
+            <strong>{location.name} → {connection.name}</strong>
+            <small>Latest connection {formatDate(connection.latestDate, { day: undefined, month: 'short', year: 'numeric' })}</small>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <section class="section" aria-labelledby="location-rooms-heading">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">The complete trail</p>
+        <h2 id="location-rooms-heading">Every room in {location.name}.</h2>
+      </div>
+      <p>Newest first, with incomplete source fields left honest.</p>
+    </div>
+    <div class="room-list">
+      {location.rooms.map((room) => <RoomCard room={room} />)}
+    </div>
+  </section>
+</Base>

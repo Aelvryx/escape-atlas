@@ -1,0 +1,51 @@
+---
+import { formatDate } from '../lib/rooms';
+import type { LocationProfile } from '../lib/locations';
+
+interface Props {
+  location: LocationProfile;
+  planner?: boolean;
+}
+
+const { location, planner = false } = Astro.props;
+const busiestCount = location.busiestDay.rooms.length;
+---
+
+<article
+  class="location-card"
+  data-location-profile
+  data-location-slug={location.slug}
+  data-location-name={location.name}
+  data-location-rooms={location.visits}
+  data-location-operators={location.operators.length}
+  data-location-days={location.visitDays.length}
+  data-location-busiest={busiestCount}
+  data-location-latest={location.latestVisit.date}
+>
+  <div class="location-card__topline">
+    <p class="eyebrow">{location.visitDays.length} {location.visitDays.length === 1 ? 'visit day' : 'visit days'}</p>
+    <span>{location.visits} {location.visits === 1 ? 'room' : 'rooms'}</span>
+  </div>
+  <h2><a href={`/location/${location.slug}/`}>{location.name}</a></h2>
+  <p class="location-card__operators">
+    {location.operators.length} known {location.operators.length === 1 ? 'operator' : 'operators'} · latest {formatDate(location.latestVisit.date, { day: undefined, month: 'short', year: 'numeric' })}
+  </p>
+  <dl class="location-card__facts">
+    <div>
+      <dt>Best recorded day</dt>
+      <dd>{busiestCount} {busiestCount === 1 ? 'room' : 'rooms'}</dd>
+    </div>
+    <div>
+      <dt>Recorded finishes</dt>
+      <dd>{location.recordedTimes} of {location.visits}</dd>
+    </div>
+  </dl>
+  <div class="location-card__actions">
+    <a class="text-link" href={`/location/${location.slug}/`}>Explore location <span aria-hidden="true">↗</span></a>
+    {planner && (
+      <button class="trip-add" type="button" data-trip-add={location.slug}>
+        <span aria-hidden="true">+</span> Add stop
+      </button>
+    )}
+  </div>
+</article>

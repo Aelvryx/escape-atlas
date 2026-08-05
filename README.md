@@ -10,6 +10,7 @@ Target: [atlas.mei.place](https://atlas.mei.place)
 - A searchable and filterable history.
 - Individual room pages that preserve unknown source fields honestly.
 - A searchable operator directory with generated venue histories and location trails.
+- A location atlas with 56 generated place histories and a shareable four-stop route board.
 - Evidence-safe statistics and frequency summaries.
 - A public-safe upcoming-room snapshot derived from Mei's authoritative Fastmail calendar.
 
