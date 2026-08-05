@@ -11,18 +11,6 @@ permissions:
 jobs:
   verify:
     runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:17-alpine
-        env:
-          POSTGRES_PASSWORD: postgres
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd "pg_isready -U postgres"
-          --health-interval 5s
-          --health-timeout 5s
-          --health-retries 10
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
@@ -32,7 +20,3 @@ jobs:
       - run: npm ci
       - run: npm run check
       - run: npm audit --audit-level=high
-      - name: Test Supabase migrations and atomic import
-        env:
-          PGPASSWORD: postgres
-        run: psql -h 127.0.0.1 -U postgres -d postgres -f tests/supabase-import.sql

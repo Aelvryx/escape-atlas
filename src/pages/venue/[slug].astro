@@ -23,6 +23,9 @@ const nearbyVenues = venueProfiles
   .filter((candidate) => candidate.slug !== venue.slug
     && candidate.locations.some((location) => locationSlugs.has(slugify(location.label))))
   .slice(0, 6);
+const nearbyLocations = venue.locations.filter((location) => nearbyVenues.some((candidate) =>
+  candidate.locations.some((candidateLocation) => slugify(candidateLocation.label) === slugify(location.label)),
+));
 const locationNames = venue.locations.map((location) => location.label);
 const locationDescription = locationNames.length === 1
   ? locationNames[0]
@@ -87,7 +90,11 @@ const locationDescription = locationNames.length === 1
           <p class="eyebrow">Same coordinates</p>
           <h2 id="nearby-venues-heading">Other operators nearby.</h2>
         </div>
-        <a class="text-link" href={`/venues/?location=${slugify(venue.locations[0].label)}`}>Browse {venue.locations[0].label} <span aria-hidden="true">→</span></a>
+        <div class="nearby-location-links" aria-label="Browse nearby operators by location">
+          {nearbyLocations.map((location) => (
+            <a class="text-link" href={`/venues/?location=${slugify(location.label)}`}>Browse {location.label} <span aria-hidden="true">→</span></a>
+          ))}
+        </div>
       </div>
       <div class="venue-grid venue-grid--nearby">
         {nearbyVenues.map((nearby) => <VenueCard venue={nearby} />)}

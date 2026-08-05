@@ -50,6 +50,20 @@ test('keeps row-level validation errors actionable', () => {
   );
 });
 
+test('blocks malformed CSV rows from the clean export', () => {
+  const preview = previewEscapeAtlasCsv([
+    canonicalHeader,
+    '2026-08-05,Reading,Example Escapes,"Unterminated room,48:30,2,60,true,',
+  ].join('\n'));
+
+  assert.equal(preview.parseErrors, 1);
+  assert.equal(preview.validRows, 0);
+  assert.equal(preview.invalidRows, 1);
+  assert.equal(preview.rows[0].valid, false);
+  assert.equal(preview.rows[0].issues[0].code, 'csv_missingquotes');
+  assert.throws(() => exportValidRowsCsv(preview), /Fix CSV parsing errors/);
+});
+
 test('uses explicit warnings for defaults and over-time finishes', () => {
   const preview = previewEscapeAtlasCsv([
     canonicalHeader,

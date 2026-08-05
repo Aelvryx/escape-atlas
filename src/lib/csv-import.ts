@@ -48,6 +48,7 @@ export interface ImportPreview {
   validRows: number;
   invalidRows: number;
   errors: number;
+  parseErrors: number;
   warnings: number;
   recognizedHeaders: CanonicalImportHeader[];
   ignoredHeaders: string[];
@@ -204,6 +205,7 @@ function summarize(
     validRows: rows.filter((row) => row.valid).length,
     invalidRows: totalRows - rows.filter((row) => row.valid).length,
     errors: issues.filter((issue) => issue.severity === 'error').length,
+    parseErrors: issues.filter((issue) => issue.code.startsWith('csv_')).length,
     warnings: issues.filter((issue) => issue.severity === 'warning').length,
     recognizedHeaders,
     ignoredHeaders,
@@ -217,14 +219,16 @@ export function previewEscapeAtlasCsv(csv: string): ImportPreview {
   const parsed = Papa.parse<string[]>(csv, { skipEmptyLines: 'greedy' });
   const matrix = parsed.data;
   const totalRows = Math.max(matrix.length - 1, 0);
-  const issues: ImportIssue[] = parsed.errors.map((error) => ({
+  const parserIssues: ImportIssue[] = parsed.errors.map((error) => ({
     severity: 'error',
     code: `csv_${error.code.toLowerCase()}`,
     message: error.message,
     row: typeof error.row === 'number' ? error.row + 1 : undefined,
   }));
+  const issues: ImportIssue[] = [];
 
   if (matrix.length === 0 || matrix[0].length === 0) {
+    issues.push(...parserIssues);
     issues.push({ severity: 'error', code: 'empty_file', message: 'The CSV file is empty.' });
     return summarize(0, [], issues, [], [], requiredHeaders);
   }
@@ -274,6 +278,7 @@ export function previewEscapeAtlasCsv(csv: string): ImportPreview {
   }
 
   if (missingHeaders.length > 0 || duplicateHeaders.size > 0) {
+    issues.unshift(...parserIssues);
     return summarize(totalRows, [], issues, recognizedHeaders, ignoredHeaders, missingHeaders);
   }
 
@@ -281,7 +286,7 @@ export function previewEscapeAtlasCsv(csv: string): ImportPreview {
 
   for (const [index, values] of matrix.slice(1).entries()) {
     const sourceRow = index + 2;
-    const rowIssues: ImportIssue[] = [];
+    const rowIssues: ImportIssue[] = parserIssues.filter((issue) => issue.row === sourceRow);
     const raw = Object.fromEntries(
       canonicalImportHeaders.map((header) => [header, '']),
     ) as Record<CanonicalImportHeader, string>;
@@ -437,6 +442,9 @@ export function previewEscapeAtlasCsv(csv: string): ImportPreview {
     });
   }
 
+  const previewedSourceRows = new Set(rowPreviews.map((row) => row.sourceRow));
+  issues.push(...parserIssues.filter((issue) => issue.row === undefined || !previewedSourceRows.has(issue.row)));
+
   const seenVisits = new Map<string, number>();
   for (const row of rowPreviews.filter((candidate) => candidate.valid)) {
     const key = [
@@ -461,6 +469,10 @@ export function previewEscapeAtlasCsv(csv: string): ImportPreview {
 }
 
 export function exportValidRowsCsv(preview: ImportPreview): string {
+  if (preview.parseErrors > 0) {
+    throw new Error('Fix CSV parsing errors before downloading a clean file.');
+  }
+
   const validRows = preview.rows
     .filter((row) => row.valid)
     .map(({ normalized }) => ({

@@ -27,7 +27,7 @@ test('keeps the profile share link canonical and attributable', () => {
   assert.equal(url.pathname, '/u/anthony-and-trenna/');
   assert.equal(url.searchParams.get('utm_source'), 'profile_share');
   assert.equal(url.searchParams.get('utm_medium'), 'web_share');
-  assert.equal(url.searchParams.get('utm_campaign'), 'early_access');
+  assert.equal(url.searchParams.get('utm_campaign'), 'shared_history');
   assert.equal(profileShare.cardPath, profileSocialCard.publicPath);
 });
 

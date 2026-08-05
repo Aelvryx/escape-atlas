@@ -12,10 +12,9 @@ test('adapts every canonical room without inventing a result', async () => {
   assert.equal(exported.preview.totalRows, 164);
   assert.equal(exported.preview.validRows, 164);
   assert.equal(exported.preview.errors, 0);
-  assert.equal(exported.payload.length, 164);
-  assert.equal(exported.payload.filter((row) => row.escaped === null).length, 164);
-  assert.equal(exported.payload.filter((row) => row.completion_seconds !== null).length, 157);
-  assert.equal(exported.payload.filter((row) => row.public_note !== null).length, 5);
+  assert.equal(exported.preview.rows.filter((row) => row.normalized.escaped === null).length, 164);
+  assert.equal(exported.preview.rows.filter((row) => row.normalized.completion_seconds !== null).length, 157);
+  assert.equal(exported.preview.rows.filter((row) => row.normalized.public_note).length, 5);
 });
 
 test('makes all ten missing identity fields explicit and traceable', async () => {
@@ -34,14 +33,13 @@ test('makes all ten missing identity fields explicit and traceable', async () =>
   assert.equal(canonicalHistoryRow(rooms[94]).venue, 'Unknown venue · Newport');
 });
 
-test('preserves duplicate legacy visits with unique idempotency references', async () => {
+test('preserves duplicate legacy visits as distinct export rows', async () => {
   const exported = await buildCanonicalHistoryExport(rooms);
-  const sourceRefs = exported.payload.map((row) => row.source_ref);
 
-  assert.equal(new Set(sourceRefs).size, 164);
-  assert.notEqual(sourceRefs[53], sourceRefs[54]);
-  assert.equal(exported.payload[53].room_name, 'Historic room #054 — name unknown');
-  assert.equal(exported.payload[54].room_name, 'Historic room #055 — name unknown');
+  assert.equal(exported.preview.rows.length, 164);
+  assert.equal(exported.preview.rows[53].normalized.game, 'Historic room #054 — name unknown');
+  assert.equal(exported.preview.rows[54].normalized.game, 'Historic room #055 — name unknown');
+  assert.notEqual(exported.preview.rows[53].normalized.game, exported.preview.rows[54].normalized.game);
 });
 
 test('exports public notes but excludes private source notes and photo metadata', async () => {

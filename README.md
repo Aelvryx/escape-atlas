@@ -11,7 +11,7 @@ Target: [atlas.mei.place](https://atlas.mei.place)
 - Individual room pages that preserve unknown source fields honestly.
 - A searchable operator directory with generated venue histories and location trails.
 - A location atlas with 56 generated place histories and a shareable four-stop route board.
-- A tested £0/£3/£8 early-access pricing contract and product-led onboarding path.
+- A browser-only CSV preflight and clean export tool with no account or upload required.
 - Evidence-safe statistics and frequency summaries.
 - A public-safe upcoming-room snapshot derived from Mei's authoritative Fastmail calendar.
 
@@ -78,14 +78,16 @@ Social previews are generated from the same typed profile data as the site. Run 
 
 The explicit Wrangler workflow remains disabled behind `CLOUDFLARE_READY=false`; it is a recovery path, not the normal deployment route.
 
-## SaaS foundation
+## Product boundary
 
-The first multi-user product slice lives in two places:
+This repository is deliberately a static, non-commercial public archive and
+planning companion. It has no pricing, paid tiers, subscription state,
+authentication or hosted user database. The importer validates files locally
+and only downloads a normalized CSV.
 
-- [`supabase/migrations/20260805073700_multi_user_foundation.sql`](supabase/migrations/20260805073700_multi_user_foundation.sql) defines the Supabase schema and row-level access rules.
-- [`supabase/migrations/20260805094000_authenticated_csv_import.sql`](supabase/migrations/20260805094000_authenticated_csv_import.sql) adds the atomic authenticated CSV import RPC.
-- Copy [`.env.example`](.env.example) to connect passwordless Supabase auth and account-backed imports.
-- [`migration/`](migration/) contains the deterministic 164-room CSV, atomic RPC payload and reconciliation manifest; regenerate with `npm run migration:canonical`.
-- [`/u/anthony-and-trenna/`](https://atlas.mei.place/u/anthony-and-trenna/) is the public-profile prototype backed by the canonical history.
+Any future multi-user or commercial Escape Atlas product will be designed as a
+separate application with its own architecture. See
+[`docs/product-boundary.md`](docs/product-boundary.md).
 
-See [`docs/saas-foundation.md`](docs/saas-foundation.md) for the data mapping and next build slice.
+[`migration/`](migration/) contains the deterministic 164-room CSV and its
+reconciliation manifest; regenerate them with `npm run history:export`.
