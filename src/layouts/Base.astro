@@ -5,14 +5,24 @@ interface Props {
   title: string;
   description?: string;
   eyebrow?: string;
+  socialImage?: string;
+  socialImageAlt?: string;
+  socialType?: 'website' | 'profile';
 }
 
 const {
   title,
   description = "Anthony and Trenna's escape-room history, from their first locked door to the next one waiting.",
   eyebrow,
+  socialImage = '/social/escape-atlas.png',
+  socialImageAlt = 'Escape Atlas — public escape-room profiles, spreadsheet import and evidence-led trip planning.',
+  socialType = 'website',
 } = Astro.props;
 const pathname = Astro.url.pathname;
+const site = Astro.site ?? new URL('https://atlas.mei.place');
+const canonicalUrl = new URL(pathname, site);
+const socialImageUrl = new URL(socialImage, site);
+const fullTitle = title === 'Escape Atlas' ? title : `${title} · Escape Atlas`;
 const navigation = [
   { href: '/', label: 'Atlas' },
   { href: '/history/', label: 'History' },
@@ -32,11 +42,26 @@ const navigation = [
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#0b1217" />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:type" content={socialType} />
+    <meta property="og:site_name" content="Escape Atlas" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={socialImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={socialImageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImageUrl} />
+    <meta name="twitter:image:alt" content={socialImageAlt} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Fraunces:opsz,wght@9..144,500;9..144,650&display=swap" rel="stylesheet" />
-    <title>{title === 'Escape Atlas' ? title : `${title} · Escape Atlas`}</title>
+    <title>{fullTitle}</title>
   </head>
   <body>
     <div class="site-shell">

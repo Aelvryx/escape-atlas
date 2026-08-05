@@ -74,6 +74,8 @@ The 159-room workbook import is immutable migration evidence. New rooms are appe
 
 Every push runs validation, type checks and a production build in GitHub Actions. The production Cloudflare Pages project, `escape-atlas`, is connected directly to the repository and automatically deploys `main` to [atlas.mei.place](https://atlas.mei.place).
 
+Social previews are generated from the same typed profile data as the site. Run `npm run social:generate` after changing share-card content or profile headline statistics; `npm run check` rejects stale committed cards. The public profile's share action uses the native device share sheet with a copy-link fallback and stable campaign attribution.
+
 The explicit Wrangler workflow remains disabled behind `CLOUDFLARE_READY=false`; it is a recovery path, not the normal deployment route.
 
 ## SaaS foundation

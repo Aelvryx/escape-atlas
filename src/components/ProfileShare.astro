@@ -1,0 +1,72 @@
+---
+import { profileShare } from '../lib/social';
+---
+
+<section
+  class="profile-share"
+  aria-labelledby="profile-share-heading"
+  data-profile-share
+  data-share-title={profileShare.title}
+  data-share-text={profileShare.text}
+  data-share-url={profileShare.url}
+>
+  <div>
+    <p class="eyebrow">Take the atlas with you</p>
+    <h2 id="profile-share-heading">A history built to be shared.</h2>
+    <p>The link carries clean campaign attribution; the card is a ready-made 1200×630 image for anywhere that prefers a picture.</p>
+  </div>
+  <div class="profile-share__actions">
+    <button class="button" type="button" data-profile-share-button>Share this profile <span aria-hidden="true">↗</span></button>
+    <a class="button button--ghost" href={profileShare.cardPath} download>Download share card</a>
+    <p class="profile-share__status" aria-live="polite" data-profile-share-status>Uses your device share sheet, with copy-link fallback.</p>
+  </div>
+</section>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-profile-share]');
+  const button = root?.querySelector<HTMLButtonElement>('[data-profile-share-button]');
+  const status = root?.querySelector<HTMLElement>('[data-profile-share-status]');
+
+  async function copyLink(url: string): Promise<void> {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(url);
+      return;
+    }
+
+    const textarea = document.createElement('textarea');
+    textarea.value = url;
+    textarea.setAttribute('readonly', '');
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.append(textarea);
+    textarea.select();
+    const copied = document.execCommand('copy');
+    textarea.remove();
+    if (!copied) throw new Error('Copy command failed');
+  }
+
+  button?.addEventListener('click', async () => {
+    if (!root || !status) return;
+    const data = {
+      title: root.dataset.shareTitle ?? document.title,
+      text: root.dataset.shareText ?? '',
+      url: root.dataset.shareUrl ?? window.location.href,
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(data);
+        status.textContent = 'Share sheet opened.';
+      } else {
+        await copyLink(data.url);
+        status.textContent = 'Profile link copied.';
+      }
+    } catch (error) {
+      if (error instanceof DOMException && error.name === 'AbortError') {
+        status.textContent = 'Share cancelled.';
+        return;
+      }
+      status.textContent = 'Could not copy automatically. Copy the profile URL from the address bar.';
+    }
+  });
+</script>
