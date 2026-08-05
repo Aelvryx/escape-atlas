@@ -14,6 +14,9 @@ multi-user product.
 - `/u/anthony-and-trenna/` is the first public-profile contract. It is generated
   from the current 164-room canonical dataset and proves the stats, activity,
   recent-history and identity presentation before authentication is connected.
+- `/venues/` is the first discovery surface. It groups 162 named-room records
+  into 82 normalized operator histories, supports operator/location/game search,
+  and generates a durable page for every known operator.
 
 ## Data mapping
 
@@ -38,6 +41,17 @@ one-time migration.
 
 The static JSON remains authoritative until the import has been reconciled and
 the profile output matches the current site.
+
+## Static discovery
+
+Venue discovery deliberately groups harmless source casing drift such as
+`Co-Decode`/`Co-decode` and `Knock out escape rooms`/`Knock Out Escape Rooms`
+into one public operator page. The two visits whose source venue is genuinely
+unknown remain visible in room history but do not invent public operator pages.
+
+Every known room links back to its operator history. Multi-location operators
+show the location breakdown, repeat visits, recorded-time coverage and the
+complete room trail; location pills return to a shareable filtered directory.
 
 ## CSV preflight
 

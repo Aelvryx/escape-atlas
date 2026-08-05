@@ -1,0 +1,97 @@
+---
+import RoomCard from '../../components/RoomCard.astro';
+import StatCard from '../../components/StatCard.astro';
+import VenueCard from '../../components/VenueCard.astro';
+import Base from '../../layouts/Base.astro';
+import { formatDate, formatDuration, slugify } from '../../lib/rooms';
+import { venueProfiles, type VenueProfile } from '../../lib/venues';
+
+export function getStaticPaths() {
+  return venueProfiles.map((venue) => ({
+    params: { slug: venue.slug },
+    props: { venue },
+  }));
+}
+
+interface Props {
+  venue: VenueProfile;
+}
+
+const { venue } = Astro.props;
+const locationSlugs = new Set(venue.locations.map((location) => slugify(location.label)));
+const nearbyVenues = venueProfiles
+  .filter((candidate) => candidate.slug !== venue.slug
+    && candidate.locations.some((location) => locationSlugs.has(slugify(location.label))))
+  .slice(0, 6);
+const locationNames = venue.locations.map((location) => location.label);
+const locationDescription = locationNames.length === 1
+  ? locationNames[0]
+  : `${locationNames.slice(0, -1).join(', ')} and ${locationNames.at(-1)}`;
+---
+
+<Base
+  title={venue.name}
+  description={`${venue.name}: ${venue.visits} rooms in Anthony and Trenna's Escape Atlas history across ${locationDescription}.`}
+  eyebrow="Venue coordinates"
+>
+  <a class="text-link venue-back-link" href="/venues/"><span aria-hidden="true">←</span> All operators</a>
+
+  <header class="venue-hero">
+    <div>
+      <p class="eyebrow">{venue.locations.length === 1 ? venue.locations[0].label : `${venue.locations.length} locations`}</p>
+      <h1>{venue.name}</h1>
+      <p class="lede">We have logged {venue.visits} {venue.visits === 1 ? 'room' : 'rooms'} with this operator, from {formatDate(venue.firstVisit.date)} to {formatDate(venue.latestVisit.date)}.</p>
+      <div class="location-pills" aria-label="Locations visited">
+        {venue.locations.map((location) => (
+          <a href={`/venues/?location=${slugify(location.label)}`}>
+            {location.label}<span>{location.count}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+    <aside class="venue-hero__stamp" aria-label={`${venue.visits} rooms visited`}>
+      <span>Rooms logged</span>
+      <strong>{venue.visits}</strong>
+      <small>{venue.recordedTimes} with recorded times</small>
+    </aside>
+  </header>
+
+  <section class="stats-grid venue-detail-stats" aria-label="Venue history summary">
+    <StatCard value={venue.visits} label="rooms played" detail={`${venue.locations.length} ${venue.locations.length === 1 ? 'location' : 'locations'}`} />
+    <StatCard value={venue.recordedTimes} label="recorded finishes" detail={`${venue.visits - venue.recordedTimes} time${venue.visits - venue.recordedTimes === 1 ? '' : 's'} lost to history`} />
+    <StatCard
+      value={venue.fastestRoom ? formatDuration(venue.fastestRoom.completionTime) : 'Unknown'}
+      label="fastest recorded room"
+      detail={venue.fastestRoom ? `Room #${venue.fastestRoom.id}` : 'No finish time survives'}
+    />
+    <StatCard value={venue.photoCount} label="team photos" detail="preserved in the atlas" />
+  </section>
+
+  <section class="section" aria-labelledby="venue-rooms-heading">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">The complete trail</p>
+        <h2 id="venue-rooms-heading">Every room here.</h2>
+      </div>
+      <p>Newest first, with source gaps left visible rather than guessed.</p>
+    </div>
+    <div class="room-list">
+      {venue.rooms.map((room) => <RoomCard room={room} />)}
+    </div>
+  </section>
+
+  {nearbyVenues.length > 0 && (
+    <section class="section" aria-labelledby="nearby-venues-heading">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Same coordinates</p>
+          <h2 id="nearby-venues-heading">Other operators nearby.</h2>
+        </div>
+        <a class="text-link" href={`/venues/?location=${slugify(venue.locations[0].label)}`}>Browse {venue.locations[0].label} <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="venue-grid venue-grid--nearby">
+        {nearbyVenues.map((nearby) => <VenueCard venue={nearby} />)}
+      </div>
+    </section>
+  )}
+</Base>
