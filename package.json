@@ -8,15 +8,19 @@
     "build": "astro build",
     "preview": "astro preview",
     "validate": "node scripts/validate-data.mjs",
-    "check": "npm run validate && astro check && astro build",
+    "test": "tsx --test tests/*.test.ts",
+    "check": "npm run validate && npm test && astro check && astro build",
     "import:history": "node scripts/import-reference.mjs",
     "generate:upcoming": "node scripts/generate-upcoming.mjs"
   },
   "dependencies": {
-    "astro": "^7.0.7"
+    "astro": "^7.0.7",
+    "papaparse": "^5.5.4"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.6",
+    "@types/papaparse": "^5.5.2",
+    "tsx": "^4.23.7",
     "typescript": "^5.9.3"
   }
 }
