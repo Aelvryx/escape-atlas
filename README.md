@@ -72,3 +72,12 @@ The 159-room workbook import is immutable migration evidence. New rooms are appe
 Every push runs validation, type checks and a production build in GitHub Actions. The production Cloudflare Pages project, `escape-atlas`, is connected directly to the repository and automatically deploys `main` to [atlas.mei.place](https://atlas.mei.place).
 
 The explicit Wrangler workflow remains disabled behind `CLOUDFLARE_READY=false`; it is a recovery path, not the normal deployment route.
+
+## SaaS foundation
+
+The first multi-user product slice lives in two places:
+
+- [`supabase/migrations/20260805073700_multi_user_foundation.sql`](supabase/migrations/20260805073700_multi_user_foundation.sql) defines the Supabase schema and row-level access rules.
+- [`/u/anthony-and-trenna/`](https://atlas.mei.place/u/anthony-and-trenna/) is the public-profile prototype backed by the canonical history.
+
+See [`docs/saas-foundation.md`](docs/saas-foundation.md) for the data mapping and next build slice.

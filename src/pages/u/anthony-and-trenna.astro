@@ -1,0 +1,119 @@
+---
+import RoomCard from '../../components/RoomCard.astro';
+import StatCard from '../../components/StatCard.astro';
+import Base from '../../layouts/Base.astro';
+import { years } from '../../lib/rooms';
+import {
+  profileHighlights,
+  profileStats,
+  publicProfile,
+  recentProfileRooms,
+} from '../../lib/profile';
+
+const maxYearCount = Math.max(...years.map((year) => year.count));
+---
+
+<Base
+  title={`${publicProfile.displayName} profile`}
+  description={`${publicProfile.displayName}'s public Escape Atlas profile: ${profileStats.rooms} rooms across ${profileStats.locations} locations.`}
+>
+  <section class="profile-hero" aria-labelledby="profile-name">
+    <div class="profile-avatar" aria-hidden="true">{publicProfile.initials}</div>
+    <div class="profile-hero__copy">
+      <p class="eyebrow">Public escape profile</p>
+      <h1 id="profile-name">{publicProfile.displayName}</h1>
+      <p class="profile-handle">{publicProfile.handle}<span aria-hidden="true">·</span>{publicProfile.homeLocation}</p>
+      <p class="lede">{publicProfile.bio}</p>
+      <ul class="profile-badges" role="list">
+        <li>Escaping since {profileStats.firstRoom.date.slice(0, 4)}</li>
+        <li>{profileStats.rooms} rooms logged</li>
+        <li>Last active {profileStats.latestRoom.date.slice(0, 7)}</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="profile-numbers-heading">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">The headline</p>
+        <h2 id="profile-numbers-heading">One shared history.</h2>
+      </div>
+      <p>A portable escape-room identity: useful to its owners, interesting to their friends, and impossible to lose in a spreadsheet.</p>
+    </div>
+    <div class="stats-grid">
+      <StatCard value={profileStats.rooms} label="rooms completed" detail={`since ${profileStats.firstRoom.date.slice(0, 4)}`} />
+      <StatCard value={profileStats.locations} label="locations explored" detail={`${profileStats.venues} operators visited`} />
+      <StatCard value={profileStats.recordedTimes} label="finishes on the clock" detail={`${profileStats.rooms - profileStats.recordedTimes} lost to history`} />
+      <StatCard value={profileStats.medianTime} label="median recorded time" detail="minutes to escape" />
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="fingerprint-heading">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Escape fingerprint</p>
+        <h2 id="fingerprint-heading">The data tells a story.</h2>
+      </div>
+      <p>Not a generic leaderboard. A profile built from the patterns that make this particular escape history theirs.</p>
+    </div>
+    <div class="fingerprint-grid">
+      {profileHighlights.map((highlight) => (
+        <article class="fingerprint-card">
+          <p class="eyebrow">{highlight.eyebrow}</p>
+          <strong>{highlight.value}</strong>
+          <h3>{highlight.title}</h3>
+          <p>{highlight.detail}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section profile-history" aria-labelledby="profile-history-heading">
+    <article class="profile-panel">
+      <p class="eyebrow">Activity trail</p>
+      <h2 id="profile-history-heading">Rooms by year.</h2>
+      <div class="year-bars">
+        {years.map((year) => (
+          <div class="year-bar">
+            <span>{year.label}</span>
+            <span class="year-bar__track"><span class="year-bar__fill" style={`width: ${(year.count / maxYearCount) * 100}%`}></span></span>
+            <strong>{year.count}</strong>
+          </div>
+        ))}
+      </div>
+    </article>
+    <aside class="profile-panel profile-panel--accent">
+      <p class="eyebrow">Familiar coordinates</p>
+      <h2>{profileStats.favouriteLocation.label}</h2>
+      <p class="profile-panel__metric">{profileStats.favouriteLocation.count}</p>
+      <p>rooms in their most-visited location.</p>
+      <dl class="profile-mini-facts">
+        <div><dt>Favourite operator</dt><dd>{profileStats.favouriteVenue.label}</dd></div>
+        <div><dt>Rooms there</dt><dd>{profileStats.favouriteVenue.count}</dd></div>
+        <div><dt>Latest room</dt><dd>#{profileStats.latestRoom.id}</dd></div>
+      </dl>
+    </aside>
+  </section>
+
+  <section class="section" aria-labelledby="profile-recent-heading">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Recent activity</p>
+        <h2 id="profile-recent-heading">Latest additions.</h2>
+      </div>
+      <a class="text-link" href="/history/">See the complete atlas <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="room-list">
+      {recentProfileRooms.map((room) => <RoomCard room={room} compact />)}
+    </div>
+  </section>
+
+  <section class="section profile-cta" aria-labelledby="profile-cta-heading">
+    <div>
+      <p class="eyebrow">Your own atlas</p>
+      <h2 id="profile-cta-heading">Every escape deserves a better home than a spreadsheet.</h2>
+      <p>Import your history, discover your patterns and share a profile that actually feels like yours.</p>
+    </div>
+    <p class="profile-cta__status"><span aria-hidden="true"></span>Multi-user foundation now in development</p>
+  </section>
+</Base>
