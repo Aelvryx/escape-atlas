@@ -62,18 +62,68 @@
         </table>
       </div>
     </section>
+
+    <section class="import-account" id="import-account" aria-labelledby="import-account-heading" hidden>
+      <div class="import-account__intro">
+        <div>
+          <p class="eyebrow">Save to your atlas</p>
+          <h3 id="import-account-heading">Your clean rows are ready for an account.</h3>
+        </div>
+        <p id="import-account-summary">Sign in without a password, then save every valid row as one atomic import.</p>
+      </div>
+
+      <div class="import-account__unconfigured" id="import-account-unconfigured" hidden>
+        <strong>Account connection is not active on this deployment.</strong>
+        <p>The preflight and clean CSV remain fully usable. Add the public Supabase project values to enable sign-in and saving.</p>
+      </div>
+
+      <form class="import-login" id="import-login" hidden>
+        <label for="import-email">Email address</label>
+        <div>
+          <input id="import-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required />
+          <button class="button" type="submit">Email me a sign-in link</button>
+        </div>
+        <p>No password to remember. The link returns you to this import.</p>
+      </form>
+
+      <div class="import-session" id="import-session" hidden>
+        <div>
+          <span>Signed in as</span>
+          <strong id="import-session-email">—</strong>
+        </div>
+        <div class="import-session__actions">
+          <button class="button" id="save-import" type="button">Import valid rows</button>
+          <button class="button button--ghost" id="import-sign-out" type="button">Sign out</button>
+        </div>
+      </div>
+
+      <p class="import-account__message" id="import-account-message" role="status" aria-live="polite" hidden></p>
+    </section>
   </div>
 </section>
 
 <script>
+  import type { Session } from '@supabase/supabase-js';
   import { exportValidRowsCsv, previewEscapeAtlasCsv, type ImportPreview } from '../lib/csv-import';
+  import { buildPersistedImportRows } from '../lib/import-persistence';
+  import { getSupabaseBrowserClient } from '../lib/supabase';
 
   const input = document.querySelector<HTMLInputElement>('#import-file');
   const dropzone = document.querySelector<HTMLElement>('#import-dropzone');
   const exampleButton = document.querySelector<HTMLButtonElement>('#load-import-example');
   const results = document.querySelector<HTMLElement>('#import-results');
   const cleanCsvButton = document.querySelector<HTMLButtonElement>('#download-clean-csv');
+  const account = document.querySelector<HTMLElement>('#import-account');
+  const accountUnconfigured = document.querySelector<HTMLElement>('#import-account-unconfigured');
+  const loginForm = document.querySelector<HTMLFormElement>('#import-login');
+  const emailInput = document.querySelector<HTMLInputElement>('#import-email');
+  const sessionPanel = document.querySelector<HTMLElement>('#import-session');
+  const saveImportButton = document.querySelector<HTMLButtonElement>('#save-import');
+  const signOutButton = document.querySelector<HTMLButtonElement>('#import-sign-out');
+  const accountMessage = document.querySelector<HTMLElement>('#import-account-message');
+  const supabase = getSupabaseBrowserClient();
   let currentPreview: ImportPreview | null = null;
+  let currentSession: Session | null = null;
 
   function setText(selector: string, value: string | number): void {
     const element = document.querySelector<HTMLElement>(selector);
@@ -142,6 +192,41 @@
     }
   }
 
+  function showAccountMessage(message: string, tone: 'good' | 'bad' | 'neutral' = 'neutral'): void {
+    if (!accountMessage) return;
+    accountMessage.hidden = !message;
+    accountMessage.textContent = message;
+    accountMessage.dataset.tone = tone;
+  }
+
+  function renderAccount(): void {
+    if (!account || !currentPreview) return;
+    account.hidden = false;
+    const readyRows = currentPreview.validRows;
+    setText('#import-account-summary', readyRows > 0
+      ? `${readyRows} valid ${readyRows === 1 ? 'row is' : 'rows are'} ready. Sign in without a password, then save them as one atomic import.`
+      : 'Fix at least one row before connecting this preview to an account.');
+
+    if (saveImportButton) {
+      saveImportButton.disabled = readyRows === 0;
+      saveImportButton.textContent = readyRows > 0
+        ? `Import ${readyRows} valid ${readyRows === 1 ? 'row' : 'rows'}`
+        : 'No valid rows to import';
+    }
+
+    if (!supabase) {
+      if (accountUnconfigured) accountUnconfigured.hidden = false;
+      if (loginForm) loginForm.hidden = true;
+      if (sessionPanel) sessionPanel.hidden = true;
+      return;
+    }
+
+    if (accountUnconfigured) accountUnconfigured.hidden = true;
+    if (loginForm) loginForm.hidden = currentSession !== null;
+    if (sessionPanel) sessionPanel.hidden = currentSession === null;
+    setText('#import-session-email', currentSession?.user.email ?? 'your account');
+  }
+
   function renderPreview(preview: ImportPreview, fileName: string): void {
     currentPreview = preview;
     if (results) results.hidden = false;
@@ -159,6 +244,8 @@
     if (cleanCsvButton) cleanCsvButton.hidden = preview.validRows === 0;
     renderIssues(preview);
     renderRows(preview);
+    showAccountMessage('');
+    renderAccount();
     results?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
@@ -207,4 +294,72 @@
     link.click();
     URL.revokeObjectURL(url);
   });
+
+  loginForm?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (!supabase || !emailInput) return;
+
+    const email = emailInput.value.trim();
+    if (!email) return;
+    showAccountMessage('Sending your sign-in link…');
+
+    const { error } = await supabase.auth.signInWithOtp({
+      email,
+      options: {
+        emailRedirectTo: new URL('/import/', window.location.origin).toString(),
+        data: { display_name: email.split('@')[0] },
+      },
+    });
+
+    if (error) showAccountMessage(error.message, 'bad');
+    else showAccountMessage(`Sign-in link sent to ${email}.`, 'good');
+  });
+
+  signOutButton?.addEventListener('click', async () => {
+    if (!supabase) return;
+    const { error } = await supabase.auth.signOut();
+    if (error) showAccountMessage(error.message, 'bad');
+    else showAccountMessage('Signed out.', 'neutral');
+  });
+
+  saveImportButton?.addEventListener('click', async () => {
+    if (!supabase || !currentSession || !currentPreview || currentPreview.validRows === 0) return;
+
+    saveImportButton.disabled = true;
+    showAccountMessage('Preparing and saving your room history…');
+
+    try {
+      const rows = await buildPersistedImportRows(currentPreview);
+      const { data, error } = await supabase.rpc('import_visits', { p_rows: rows });
+      if (error) throw error;
+
+      const processed = data && typeof data === 'object' && 'processed' in data
+        ? Number(data.processed)
+        : rows.length;
+      saveImportButton.textContent = 'Import complete';
+      showAccountMessage(`${processed} ${processed === 1 ? 'row' : 'rows'} processed. Repeating the same import is safe.`, 'good');
+    } catch (error) {
+      saveImportButton.disabled = false;
+      showAccountMessage(error instanceof Error ? error.message : 'The import could not be saved.', 'bad');
+    }
+  });
+
+  async function initializeAccount(): Promise<void> {
+    if (!supabase) {
+      renderAccount();
+      return;
+    }
+
+    const { data, error } = await supabase.auth.getSession();
+    if (error) showAccountMessage(error.message, 'bad');
+    currentSession = data.session;
+    renderAccount();
+
+    supabase.auth.onAuthStateChange((_event, session) => {
+      currentSession = session;
+      renderAccount();
+    });
+  }
+
+  void initializeAccount();
 </script>
