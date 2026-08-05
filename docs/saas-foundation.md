@@ -20,6 +20,9 @@ multi-user product.
 - `/locations/` makes discovery place-first. It generates a durable history for
   all 56 recorded towns and cities, exposes operator and multi-room-day density,
   and lets a visitor assemble a four-stop route encoded in a shareable URL.
+- `/pricing/` publishes the launch contract: Free (25 rooms), Enthusiast (£3/month,
+  unlimited rooms) and Group (£8/month, up to six people). The same typed plan
+  data drives the cards and comparison table, and tests lock the prices and limits.
 
 ## Data mapping
 
@@ -44,6 +47,10 @@ one-time migration.
 
 The static JSON remains authoritative until the import has been reconciled and
 the profile output matches the current site.
+
+Payment is deliberately not collected during early access. The pricing journey
+leads first to the working browser-only import preflight, public profile and trip
+planner, so visitors can inspect the real product before billing is connected.
 
 ## Static discovery
 
