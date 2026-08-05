@@ -9,7 +9,9 @@
     "preview": "astro preview",
     "validate": "node scripts/validate-data.mjs",
     "test": "tsx --test tests/*.test.ts",
-    "check": "npm run validate && npm test && astro check && astro build",
+    "check": "npm run validate && npm run migration:verify && npm test && astro check && astro build",
+    "migration:canonical": "tsx scripts/export-canonical-history.ts",
+    "migration:verify": "tsx scripts/export-canonical-history.ts --check",
     "import:history": "node scripts/import-reference.mjs",
     "generate:upcoming": "node scripts/generate-upcoming.mjs"
   },

@@ -42,6 +42,62 @@ begin
 end;
 $$;
 
+insert into auth.users (id, raw_user_meta_data)
+values (
+  '22222222-2222-4222-8222-222222222222',
+  '{"display_name":"Anthony & Trenna"}'::jsonb
+);
+
+set role authenticated;
+select set_config('request.jwt.claim.sub', '22222222-2222-4222-8222-222222222222', false);
+
+\ir ../migration/canonical-history.sql
+\ir ../migration/canonical-history.sql
+
+reset role;
+
+do $$
+declare
+  v_profile_id uuid := '22222222-2222-4222-8222-222222222222';
+begin
+  if (select count(*) from public.visits where profile_id = v_profile_id) <> 164 then
+    raise exception 'canonical history did not produce exactly 164 visits';
+  end if;
+
+  if (select count(*) from public.venues where created_by = v_profile_id) <> 95 then
+    raise exception 'canonical history did not produce exactly 95 venue/location identities';
+  end if;
+
+  if (select count(*) from public.rooms where created_by = v_profile_id) <> 164 then
+    raise exception 'canonical history did not preserve exactly 164 room identities';
+  end if;
+
+  if (select count(*) from public.visits where profile_id = v_profile_id and completion_seconds is not null) <> 157 then
+    raise exception 'canonical history timed-visit count differs from source';
+  end if;
+
+  if (select count(*) from public.visits where profile_id = v_profile_id and public_note is not null) <> 5 then
+    raise exception 'canonical history public-note count differs from source';
+  end if;
+
+  if (select count(*) from public.visits where profile_id = v_profile_id and escaped is null) <> 164 then
+    raise exception 'canonical migration invented escape outcomes';
+  end if;
+
+  if (select count(distinct source_ref) from public.visits where profile_id = v_profile_id) <> 164 then
+    raise exception 'canonical migration collapsed source identities';
+  end if;
+
+  if (
+    select min(played_on)::text || '|' || max(played_on)::text
+    from public.visits
+    where profile_id = v_profile_id
+  ) <> '2015-11-28|2026-07-13' then
+    raise exception 'canonical migration date range differs from source';
+  end if;
+end;
+$$;
+
 set role authenticated;
 select set_config('request.jwt.claim.sub', '11111111-1111-4111-8111-111111111111', false);
 
@@ -85,13 +141,18 @@ do $$
 declare
   v_visits_before integer;
 begin
-  if (select count(*) from public.venues) <> 1
-    or (select count(*) from public.rooms) <> 1
-    or (select count(*) from public.visits) <> 1 then
+  if (select count(*) from public.venues where created_by = '11111111-1111-4111-8111-111111111111') <> 1
+    or (select count(*) from public.rooms where created_by = '11111111-1111-4111-8111-111111111111') <> 1
+    or (select count(*) from public.visits where profile_id = '11111111-1111-4111-8111-111111111111') <> 1 then
     raise exception 'repeat import created duplicate entities';
   end if;
 
-  if (select public_note from public.visits limit 1) <> 'Idempotent update' then
+  if (
+    select public_note
+    from public.visits
+    where profile_id = '11111111-1111-4111-8111-111111111111'
+    limit 1
+  ) <> 'Idempotent update' then
     raise exception 'repeat import did not update the existing visit';
   end if;
 

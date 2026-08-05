@@ -80,6 +80,7 @@ The first multi-user product slice lives in two places:
 - [`supabase/migrations/20260805073700_multi_user_foundation.sql`](supabase/migrations/20260805073700_multi_user_foundation.sql) defines the Supabase schema and row-level access rules.
 - [`supabase/migrations/20260805094000_authenticated_csv_import.sql`](supabase/migrations/20260805094000_authenticated_csv_import.sql) adds the atomic authenticated CSV import RPC.
 - Copy [`.env.example`](.env.example) to connect passwordless Supabase auth and account-backed imports.
+- [`migration/`](migration/) contains the deterministic 164-room CSV, atomic RPC payload and reconciliation manifest; regenerate with `npm run migration:canonical`.
 - [`/u/anthony-and-trenna/`](https://atlas.mei.place/u/anthony-and-trenna/) is the public-profile prototype backed by the canonical history.
 
 See [`docs/saas-foundation.md`](docs/saas-foundation.md) for the data mapping and next build slice.
