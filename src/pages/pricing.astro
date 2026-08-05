@@ -1,0 +1,149 @@
+---
+import Base from '../layouts/Base.astro';
+import { pricingFeatureRows, pricingPlans } from '../lib/plans';
+---
+
+<Base
+  title="Pricing"
+  description="Simple early-access pricing for Escape Atlas: a free personal profile, an unlimited enthusiast plan, and a shared group atlas."
+  eyebrow="Simple pricing"
+>
+  <header class="page-header pricing-header">
+    <div class="pricing-status"><span aria-hidden="true"></span>Early access · no payment taken yet</div>
+    <h1>Your history should outgrow the spreadsheet. Your bill should not.</h1>
+    <p class="lede">Start free, keep the complete personal atlas for £3 a month, or bring the whole team for £8. No annual trap, no invented enterprise tier, no mystery quote form.</p>
+    <div class="hero-actions">
+      <a class="button" href="/import/">Test your CSV now <span aria-hidden="true">→</span></a>
+      <a class="button button--ghost" href="/u/anthony-and-trenna/">See a working profile</a>
+    </div>
+    <ul class="pricing-promises" role="list">
+      <li>Cancel monthly</li>
+      <li>Preview before upload</li>
+      <li>Your data remains portable</li>
+    </ul>
+  </header>
+
+  <section class="section pricing-section" aria-labelledby="plans-heading">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Choose the size of the atlas</p>
+        <h2 id="plans-heading">Three plans. One useful distinction.</h2>
+      </div>
+      <p>Free proves the product. Enthusiast removes the room limit. Group makes the history and planning genuinely shared.</p>
+    </div>
+
+    <div class="pricing-grid">
+      {pricingPlans.map((plan) => (
+        <article class:list={['pricing-card', { 'pricing-card--featured': plan.highlighted }]} data-plan-id={plan.id}>
+          {plan.highlighted && <p class="pricing-card__flag">The sensible default</p>}
+          <div class="pricing-card__heading">
+            <p class="eyebrow">{plan.bestFor}</p>
+            <h3>{plan.name}</h3>
+            <p>{plan.strapline}</p>
+          </div>
+          <p class="pricing-card__price"><strong>{plan.priceLabel}</strong><span>{plan.cadence}</span></p>
+          <ul role="list">
+            {plan.features.map((feature) => <li><span aria-hidden="true">✓</span>{feature}</li>)}
+          </ul>
+          <a class:list={['button', { 'button--ghost': !plan.highlighted }]} href={plan.cta.href}>{plan.cta.label} <span aria-hidden="true">→</span></a>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section pricing-comparison" aria-labelledby="comparison-heading">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">The exact contract</p>
+        <h2 id="comparison-heading">Nothing hiding below the fold.</h2>
+      </div>
+      <p>These are the launch entitlements. Early access will not silently move a promised feature into a more expensive tier.</p>
+    </div>
+    <div class="pricing-table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Feature</th>
+            {pricingPlans.map((plan) => <th scope="col">{plan.name}</th>)}
+          </tr>
+        </thead>
+        <tbody>
+          {pricingFeatureRows.map((feature) => (
+            <tr>
+              <th scope="row">{feature.label}</th>
+              {pricingPlans.map((plan) => <td>{feature.values[plan.id]}</td>)}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section pricing-proof" aria-labelledby="pricing-proof-heading">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Try the product, not a promise</p>
+        <h2 id="pricing-proof-heading">The useful parts are already visible.</h2>
+      </div>
+      <p>Payment is deliberately later than proof. Walk through the current product before deciding whether it deserves a place in your hobby.</p>
+    </div>
+    <div class="pricing-proof__grid">
+      <article>
+        <span>01</span>
+        <h3>Bring a spreadsheet</h3>
+        <p>Run the browser-only CSV preflight, inspect every normalized row, and download a clean copy without creating an account.</p>
+        <a class="text-link" href="/import/">Test the importer <span aria-hidden="true">→</span></a>
+      </article>
+      <article>
+        <span>02</span>
+        <h3>Inspect a real atlas</h3>
+        <p>Anthony and Trenna's 164-room history is the working product example, not a polished mock-up with invented data.</p>
+        <a class="text-link" href="/u/anthony-and-trenna/">Open the profile <span aria-hidden="true">→</span></a>
+      </article>
+      <article>
+        <span>03</span>
+        <h3>Plan from evidence</h3>
+        <p>Build a shareable route from places, operators and room density already recorded in the atlas.</p>
+        <a class="text-link" href="/locations/#trip-planner">Build a route <span aria-hidden="true">→</span></a>
+      </article>
+    </div>
+  </section>
+
+  <section class="section pricing-faq" aria-labelledby="pricing-faq-heading">
+    <div>
+      <p class="eyebrow">Plain answers</p>
+      <h2 id="pricing-faq-heading">Before anybody reaches for a card.</h2>
+    </div>
+    <div class="pricing-faq__list">
+      <details open>
+        <summary>Can I subscribe today?</summary>
+        <p>Not yet. Escape Atlas is in early access, so the product can be tested but payment is not being collected. Nobody is being charged for a roadmap.</p>
+      </details>
+      <details>
+        <summary>What counts toward the room limit?</summary>
+        <p>One completed-room visit in your personal history. Browsing public rooms, operators and location guides never consumes the allowance.</p>
+      </details>
+      <details>
+        <summary>What happens to my spreadsheet?</summary>
+        <p>The preflight runs in your browser. You see the normalized result before any account-backed import, and you can download the clean CSV for yourself.</p>
+      </details>
+      <details>
+        <summary>Why pay for Enthusiast?</summary>
+        <p>It removes the 25-room ceiling and funds the useful data-heavy parts: deeper statistics, planning and a complete portable history without advertising.</p>
+      </details>
+    </div>
+  </section>
+
+  <section class="section profile-cta" aria-labelledby="pricing-cta-heading">
+    <div>
+      <p class="eyebrow">Start with proof</p>
+      <h2 id="pricing-cta-heading">Give Escape Atlas one CSV before you give it one pound.</h2>
+      <p>The dry run is live now. It validates familiar spreadsheet headings, shows every correction, and never uploads the preview.</p>
+    </div>
+    <div class="profile-cta__actions">
+      <a class="button" href="/import/">Preview a CSV import <span aria-hidden="true">→</span></a>
+      <p class="profile-cta__status"><span aria-hidden="true"></span>Early access pricing locked</p>
+    </div>
+  </section>
+</Base>
+
