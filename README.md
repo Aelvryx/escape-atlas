@@ -43,13 +43,15 @@ Fastmail remains authoritative. Calendar events intended for the public site use
 Escape room — <game> @ <venue>
 ```
 
-The event's `LOCATION` becomes the public location. The generator reads bounded calendar data through the local Fastmail helper, then writes only the safe fields in `src/data/upcoming.json`:
+The event's `LOCATION` becomes the public location. The generator reads expanded events through the current workspace Fastmail reader (`scripts/fastmail_read.py`), then writes only the safe fields in `src/data/upcoming.json`. Fastmail reads are bounded to 62 days, so refresh this rolling window during the weekly upkeep pass:
 
 ```bash
 npm run generate:upcoming -- \
-  --start 2026-07-11T00:00:00+01:00 \
-  --end 2027-01-01T00:00:00+00:00
+  --start 2026-11-07 \
+  --end 2027-01-07
 ```
+
+For a different local Fastmail reader location, set `FASTMAIL_CALENDAR_HELPER` to its path. The end date is exclusive.
 
 Raw ICS, attendee addresses, descriptions, booking references, payment details and QR material are never written to the repository.
 

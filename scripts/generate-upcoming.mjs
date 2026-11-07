@@ -1,7 +1,5 @@
 import { execFileSync } from 'node:child_process';
 import { writeFile } from 'node:fs/promises';
-import os from 'node:os';
-import path from 'node:path';
 
 const args = process.argv.slice(2);
 const valueFor = (flag) => {
@@ -13,7 +11,7 @@ const start = valueFor('--start');
 const end = valueFor('--end');
 const output = valueFor('--output') ?? 'src/data/upcoming.json';
 const helper = process.env.FASTMAIL_CALENDAR_HELPER
-  ?? path.join(os.homedir(), '.openclaw/workspace/skills/fastmail/scripts/fastmail_calendar.py');
+  ?? '/home/mei/.openclaw/workspace/scripts/fastmail_read.py';
 
 if (!start || !end) {
   console.error('Usage: node scripts/generate-upcoming.mjs --start <ISO> --end <ISO> [--output <json>]');
@@ -58,21 +56,29 @@ function slug(value) {
   return value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 }
 
-const listOutput = runHelper(['list', '--start', start, '--end', end, '--limit', '500']);
-const listPattern = /^(.+?) -> (.+?)  (.+?)  uid=(\S+)(?: attendees=.*)?$/;
+const startDate = start.slice(0, 10);
+const endDate = end.slice(0, 10);
+const calendar = JSON.parse(runHelper(['calendar', '--start', startDate, '--end', endDate]));
+if (!Array.isArray(calendar.resources)) throw new Error('Fastmail helper returned no calendar resources array.');
 const summaryPattern = /^(?:🗝️\s*)?Escape room\s*[—:-]\s*(.+?)\s+@\s+(.+)$/i;
 const candidates = [];
 
-for (const line of listOutput.split('\n')) {
-  const listMatch = line.match(listPattern);
-  if (!listMatch) continue;
-  const summaryMatch = listMatch[3].match(summaryPattern);
-  if (summaryMatch) candidates.push({ uid: listMatch[4], game: summaryMatch[1].trim(), venue: summaryMatch[2].trim() });
+for (const resource of calendar.resources) {
+  const unfolded = unfoldIcs(resource.ics ?? '');
+  let eventLines = null;
+  for (const line of unfolded) {
+    if (line.toUpperCase() === 'BEGIN:VEVENT') eventLines = [];
+    else if (line.toUpperCase() === 'END:VEVENT' && eventLines) {
+      const summary = property(eventLines, 'SUMMARY');
+      const summaryMatch = summary?.match(summaryPattern);
+      if (summaryMatch) candidates.push({ lines: eventLines, game: summaryMatch[1].trim(), venue: summaryMatch[2].trim() });
+      eventLines = null;
+    } else if (eventLines) eventLines.push(line);
+  }
 }
 
 const events = candidates.map((candidate) => {
-  const raw = runHelper(['get', candidate.uid, '--raw']);
-  const lines = unfoldIcs(raw);
+  const lines = candidate.lines;
   const dtstartLine = lines.find((line) => line.split(':', 1)[0].split(';', 1)[0].toUpperCase() === 'DTSTART');
   const dtstart = dtstartLine ? dtstartLine.slice(dtstartLine.indexOf(':') + 1) : null;
   const { date, time } = dateAndTime(dtstart);
