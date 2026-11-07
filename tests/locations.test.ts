@@ -13,8 +13,8 @@ test('maps every canonical room to one stable location page', () => {
   const mappedRooms = profiles.flatMap((location) => location.rooms);
 
   assert.equal(profiles.length, 56);
-  assert.equal(mappedRooms.length, 164);
-  assert.equal(new Set(mappedRooms.map((room) => room.id)).size, 164);
+  assert.equal(mappedRooms.length, rooms.length);
+  assert.equal(new Set(mappedRooms.map((room) => room.id)).size, rooms.length);
   assert.equal(new Set(profiles.map((location) => location.slug)).size, profiles.length);
   assert.equal(locationProfileForRoom(rooms[0]).slug, profiles.find((location) => location.rooms.some((room) => room.id === 1))?.slug);
 });

@@ -9,8 +9,8 @@ test('maps every named room to one stable operator page', () => {
 
   assert.equal(profiles.length, 82);
   assert.equal(stats.venues, 82);
-  assert.equal(mappedRooms.length, 162);
-  assert.equal(new Set(mappedRooms.map((room) => room.id)).size, 162);
+  assert.equal(mappedRooms.length, rooms.filter((room) => room.venue).length);
+  assert.equal(new Set(mappedRooms.map((room) => room.id)).size, rooms.filter((room) => room.venue).length);
   assert.equal(new Set(profiles.map((venue) => venue.slug)).size, profiles.length);
   assert.equal(venueProfileForRoom(rooms[94]), null);
   assert.equal(venueProfileForRoom(rooms[116]), null);

@@ -7,19 +7,19 @@
     "workbook": "trenna-escape-rooms-2026-07-11.xlsx",
     "workbookSha256": "0513e77c0c6cd367cc71ce1f2f60799594ac27066bfe0898a3f5fcdffdd97f28",
     "migrationRecordCount": 159,
-    "recordCount": 164,
-    "updated": "2026-07-15",
-    "sha256": "84ad966c9849b02ac9bc33f1032ac60c1d5ea81cd4ce1f59a4b723b09005ac5f"
+    "recordCount": 165,
+    "updated": "2026-11-07",
+    "sha256": "9e39f2e21455bd2aee14f2d6915cc9301cf187f637e669e2f4e1b59a5e86ecc6"
   },
   "expected": {
-    "records": 164,
-    "venueLocations": 95,
-    "roomIdentities": 164,
-    "timedRecords": 157,
+    "records": 165,
+    "venueLocations": 96,
+    "roomIdentities": 165,
+    "timedRecords": 158,
     "publicNotes": 5,
-    "unknownOutcomes": 164,
+    "unknownOutcomes": 165,
     "firstPlayedOn": "2015-11-28",
-    "lastPlayedOn": "2026-07-13"
+    "lastPlayedOn": "2026-11-07"
   },
   "substitutions": [
     {
@@ -74,7 +74,7 @@
     }
   ],
   "artifacts": {
-    "csvSha256": "ba1a6868d1058275632041cef77966de29bd8c2f081dc1d569bd5946bc4d4e4a"
+    "csvSha256": "535d201f72438ca9697ff6f861bebf353b03055f68e840504681769831da03b1"
   },
   "rows": [
     {
@@ -1060,6 +1060,12 @@
       "location": "Nottingham",
       "venue": "Break Escape",
       "game": "Robin Hood"
+    },
+    {
+      "sourceId": 165,
+      "location": "Basingstoke",
+      "venue": "Pier Pressure",
+      "game": "Pride & Predicament"
     }
   ]
 }

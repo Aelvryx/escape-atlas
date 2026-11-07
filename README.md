@@ -6,7 +6,7 @@ Target: [atlas.mei.place](https://atlas.mei.place)
 
 ## What It Contains
 
-- A validated canonical history of 164 completed rooms from 2015–2026.
+- A validated canonical history of 165 recorded completed rooms from 2015–2026.
 - A searchable and filterable history.
 - Individual room pages that preserve unknown source fields honestly.
 - A searchable operator directory with generated venue histories and location trails.
@@ -52,6 +52,8 @@ npm run generate:upcoming -- \
 ```
 
 For a different local Fastmail reader location, set `FASTMAIL_CALENDAR_HELPER` to its path. The end date is exclusive.
+
+Completed bookings are excluded using the canonical history. A booking mentioning escape rooms but not using the summary convention fails generation instead of silently disappearing; reconcile its title against the booking evidence before retrying. An empty filtered snapshot alone is not evidence that the calendar has no bookings.
 
 Raw ICS, attendee addresses, descriptions, booking references, payment details and QR material are never written to the repository.
 
