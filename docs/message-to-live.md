@@ -18,8 +18,8 @@ Player count, game length, notes and a finish photo are optional. When the playe
 3. Append the room to `src/data/rooms.json` and update `source.recordCount` and `source.updated`.
 4. If a supplied photo is intended for the public Atlas, store it under `public/images/rooms/` and add accessible alt text. Never publish booking references, QR codes, email addresses, phone numbers, payment details or raw calendar data.
 5. Remove the exact matching completed entry from `src/data/upcoming.json`, if present, and refresh its `generatedAt` timestamp. Do not rescan Fastmail unless a new booking also needs publishing.
-6. Run `npm run validate` and `git diff --check`.
-7. Commit and push only the bounded Atlas change, confirm `HEAD` matches `origin/main`, and report the predicted room link as deploying.
+6. Regenerate `npm run history:export` and `npm run social:generate` after adding rooms. Run `npm run validate` and `git -c core.whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol diff --check` (the canonical CSV uses CRLF).
+7. Commit and push only the bounded Atlas change on a feature branch. Open a PR, satisfy required checks, and merge through the protected-branch workflow; never push directly to `main`. Report the predicted room link as deploying only once merged.
 8. Stop. Do not duplicate the release into Asana or daily memory.
 
 ## CI and deployment ownership

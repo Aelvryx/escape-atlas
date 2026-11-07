@@ -1,11 +1,21 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-07T10:16:10.240Z",
+  "generatedAt": "2026-11-07T12:04:02.181Z",
   "source": "Fastmail calendar (public-safe derived snapshot)",
   "window": {
     "start": "2026-11-07",
     "end": "2027-01-07"
   },
   "eventConvention": "Escape room — <game> @ <venue>",
-  "events": []
+  "events": [
+    {
+      "id": "2026-11-14-sweets-suspicions-pier-pressure",
+      "date": "2026-11-14",
+      "time": "10:00",
+      "location": "Pier Pressure Basingstoke, 21-23 Wote Street, RG21 7NE",
+      "venue": "Pier Pressure",
+      "game": "Sweets & Suspicions",
+      "note": null
+    }
+  ]
 }

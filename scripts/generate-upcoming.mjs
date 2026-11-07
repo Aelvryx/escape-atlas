@@ -1,5 +1,5 @@
 import { execFileSync } from 'node:child_process';
-import { writeFile } from 'node:fs/promises';
+import { readFile, writeFile } from 'node:fs/promises';
 
 const args = process.argv.slice(2);
 const valueFor = (flag) => {
@@ -62,6 +62,10 @@ const calendar = JSON.parse(runHelper(['calendar', '--start', startDate, '--end'
 if (!Array.isArray(calendar.resources)) throw new Error('Fastmail helper returned no calendar resources array.');
 const summaryPattern = /^(?:🗝️\s*)?Escape room\s*[—:-]\s*(.+?)\s+@\s+(.+)$/i;
 const candidates = [];
+// The canonical history prevents a completed booking reappearing on the same day.
+const history = JSON.parse(await readFile(new URL('../src/data/rooms.json', import.meta.url), 'utf8'));
+const roomKey = (date, game, venue) => `${date}|${game?.toLowerCase()}|${venue?.toLowerCase()}`;
+const completed = new Set(history.rooms.map((room) => roomKey(room.date, room.game, room.venue)));
 
 for (const resource of calendar.resources) {
   const unfolded = unfoldIcs(resource.ics ?? '');
@@ -71,7 +75,12 @@ for (const resource of calendar.resources) {
     else if (line.toUpperCase() === 'END:VEVENT' && eventLines) {
       const summary = property(eventLines, 'SUMMARY');
       const summaryMatch = summary?.match(summaryPattern);
-      if (summaryMatch) candidates.push({ lines: eventLines, game: summaryMatch[1].trim(), venue: summaryMatch[2].trim() });
+      const cancelled = property(eventLines, 'STATUS') === 'CANCELLED';
+      const description = property(eventLines, 'DESCRIPTION') ?? '';
+      if (!cancelled && !summaryMatch && /escape\s*room/i.test(`${summary ?? ''} ${description}`)) {
+        throw new Error('An escape-room booking does not follow the public summary convention; reconcile the calendar before publishing.');
+      }
+      if (!cancelled && summaryMatch) candidates.push({ lines: eventLines, game: summaryMatch[1].trim(), venue: summaryMatch[2].trim() });
       eventLines = null;
     } else if (eventLines) eventLines.push(line);
   }
@@ -93,7 +102,7 @@ const events = candidates.map((candidate) => {
     game: candidate.game,
     note: null,
   };
-}).sort((a, b) => a.date.localeCompare(b.date) || (a.time ?? '').localeCompare(b.time ?? ''));
+}).filter((event) => !completed.has(roomKey(event.date, event.game, event.venue))).sort((a, b) => a.date.localeCompare(b.date) || (a.time ?? '').localeCompare(b.time ?? ''));
 
 const snapshot = {
   schemaVersion: 1,

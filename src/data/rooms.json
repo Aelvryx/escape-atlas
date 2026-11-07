@@ -7,8 +7,8 @@
     "workbook": "trenna-escape-rooms-2026-07-11.xlsx",
     "workbookSha256": "0513e77c0c6cd367cc71ce1f2f60799594ac27066bfe0898a3f5fcdffdd97f28",
     "migrationRecordCount": 159,
-    "recordCount": 164,
-    "updated": "2026-07-15"
+    "recordCount": 165,
+    "updated": "2026-11-07"
   },
   "rooms": [
     {
@@ -2620,6 +2620,22 @@
         "width": 960,
         "height": 1280
       }
+    },
+    {
+      "id": 165,
+      "date": "2026-11-07",
+      "location": "Basingstoke",
+      "venue": "Pier Pressure",
+      "game": "Pride & Predicament",
+      "completionTime": "00:58:00",
+      "completionSeconds": 3480,
+      "players": 2,
+      "allottedMinutes": 60,
+      "notes": "Time reported as 58 minutes (whole-minute precision). Swapped with the following week’s room due to a technical fault. Game length uses the standard 60-minute assumption.",
+      "sourceFlags": [
+        "message-confirmed",
+        "booking-confirmed"
+      ]
     }
   ]
 }
