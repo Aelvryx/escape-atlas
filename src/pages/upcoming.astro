@@ -6,7 +6,7 @@ import { formatDate, upcoming } from '../lib/rooms';
 <Base title="Upcoming" description="The next escape rooms waiting for Anthony and Trenna." eyebrow="Next coordinates">
   <header class="page-header">
     <h1>The doors ahead.</h1>
-    <p class="lede">The next adventures are booked: {upcoming.length} rooms waiting on the route ahead.</p>
+    <p class="lede">{upcoming.length ? `The next adventures are booked: ${upcoming.length} rooms waiting on the route ahead.` : 'No rooms are booked at the moment; the next adventure will appear here when one is.'}</p>
   </header>
 
   {upcoming.length ? (
