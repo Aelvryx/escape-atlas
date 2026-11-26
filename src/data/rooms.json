@@ -7,8 +7,8 @@
     "workbook": "trenna-escape-rooms-2026-07-11.xlsx",
     "workbookSha256": "0513e77c0c6cd367cc71ce1f2f60799594ac27066bfe0898a3f5fcdffdd97f28",
     "migrationRecordCount": 159,
-    "recordCount": 165,
-    "updated": "2026-11-07"
+    "recordCount": 166,
+    "updated": "2026-11-26"
   },
   "rooms": [
     {
@@ -2636,6 +2636,29 @@
         "message-confirmed",
         "booking-confirmed"
       ]
+    },
+    {
+      "id": 166,
+      "date": "2026-11-14",
+      "location": "Basingstoke",
+      "venue": "Pier Pressure",
+      "game": "Sweets & Suspicions",
+      "completionTime": null,
+      "completionSeconds": null,
+      "players": 2,
+      "allottedMinutes": 60,
+      "notes": "Completion confirmed by the venue’s post-game email and team photo. Completion time not available in the recovered evidence. Game length uses the standard 60-minute assumption.",
+      "sourceFlags": [
+        "booking-confirmed",
+        "email-photo-confirmed"
+      ],
+      "photo": {
+        "src": "/images/rooms/166-sweets-suspicions.jpg",
+        "alt": "Anthony and Trenna smiling after Sweets & Suspicions at Pier Pressure Basingstoke, in front of the sweet-shop cabinet.",
+        "caption": "Post-game team photo recovered from the venue’s email.",
+        "width": 2146,
+        "height": 1470
+      }
     }
   ]
 }

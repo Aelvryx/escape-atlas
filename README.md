@@ -6,7 +6,7 @@ Target: [atlas.mei.place](https://atlas.mei.place)
 
 ## What It Contains
 
-- A validated canonical history of 165 recorded completed rooms from 2015–2026.
+- A validated canonical history of 166 recorded completed rooms from 2015–2026.
 - A searchable and filterable history.
 - Individual room pages that preserve unknown source fields honestly.
 - A searchable operator directory with generated venue histories and location trails.
@@ -93,5 +93,5 @@ Any future multi-user or commercial Escape Atlas product will be designed as a
 separate application with its own architecture. See
 [`docs/product-boundary.md`](docs/product-boundary.md).
 
-[`migration/`](migration/) contains the deterministic 164-room CSV and its
+[`migration/`](migration/) contains the deterministic 166-room CSV and its
 reconciliation manifest; regenerate them with `npm run history:export`.
