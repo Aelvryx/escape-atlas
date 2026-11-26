@@ -7,19 +7,19 @@
     "workbook": "trenna-escape-rooms-2026-07-11.xlsx",
     "workbookSha256": "0513e77c0c6cd367cc71ce1f2f60799594ac27066bfe0898a3f5fcdffdd97f28",
     "migrationRecordCount": 159,
-    "recordCount": 165,
-    "updated": "2026-11-07",
-    "sha256": "9e39f2e21455bd2aee14f2d6915cc9301cf187f637e669e2f4e1b59a5e86ecc6"
+    "recordCount": 166,
+    "updated": "2026-11-26",
+    "sha256": "743f71275a00c3e51bb7faff0d87df11dc635dd67826b8b15a1f9bf3b09673f7"
   },
   "expected": {
-    "records": 165,
+    "records": 166,
     "venueLocations": 96,
-    "roomIdentities": 165,
+    "roomIdentities": 166,
     "timedRecords": 158,
     "publicNotes": 5,
-    "unknownOutcomes": 165,
+    "unknownOutcomes": 166,
     "firstPlayedOn": "2015-11-28",
-    "lastPlayedOn": "2026-11-07"
+    "lastPlayedOn": "2026-11-14"
   },
   "substitutions": [
     {
@@ -74,7 +74,7 @@
     }
   ],
   "artifacts": {
-    "csvSha256": "535d201f72438ca9697ff6f861bebf353b03055f68e840504681769831da03b1"
+    "csvSha256": "4fd3aaaf65d82a9a9fff39720f6bb72fda7f1337770e22083cb96e4e254d5e28"
   },
   "rows": [
     {
@@ -1066,6 +1066,12 @@
       "location": "Basingstoke",
       "venue": "Pier Pressure",
       "game": "Pride & Predicament"
+    },
+    {
+      "sourceId": 166,
+      "location": "Basingstoke",
+      "venue": "Pier Pressure",
+      "game": "Sweets & Suspicions"
     }
   ]
 }
