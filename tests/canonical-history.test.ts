@@ -17,19 +17,21 @@ test('adapts every canonical room without inventing a result', async () => {
   assert.equal(exported.preview.rows.filter((row) => row.normalized.public_note).length, 5);
 });
 
-test('makes all ten missing identity fields explicit and traceable', async () => {
+test('makes all eight remaining missing identity fields explicit and traceable', async () => {
   const exported = await buildCanonicalHistoryExport(rooms);
 
-  assert.equal(exported.substitutions.length, 10);
+  assert.equal(exported.substitutions.length, 8);
   assert.deepEqual(
     exported.substitutions.filter((entry) => entry.field === 'venue').map((entry) => entry.sourceId),
     [95, 117],
   );
   assert.deepEqual(
     exported.substitutions.filter((entry) => entry.field === 'game').map((entry) => entry.sourceId),
-    [1, 2, 3, 4, 5, 6, 54, 55],
+    [2, 3, 4, 6, 54, 55],
   );
-  assert.equal(canonicalHistoryRow(rooms[0]).game, 'Historic room #001 — name unknown');
+  assert.equal(canonicalHistoryRow(rooms[0]).game, 'The Lab');
+  assert.equal(canonicalHistoryRow(rooms[4]).game, 'The Cube');
+  assert.equal(canonicalHistoryRow(rooms[1]).game, 'Historic room #002 — name unknown');
   assert.equal(canonicalHistoryRow(rooms[94]).venue, 'Unknown venue · Newport');
 });
 

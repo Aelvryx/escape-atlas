@@ -9,7 +9,7 @@
     "migrationRecordCount": 159,
     "recordCount": 166,
     "updated": "2026-11-26",
-    "sha256": "743f71275a00c3e51bb7faff0d87df11dc635dd67826b8b15a1f9bf3b09673f7"
+    "sha256": "ebcc93426e2eee3acdc809b27682cf9029b4cdff0dc4147a5e55ab8fa9a17821"
   },
   "expected": {
     "records": 166,
@@ -22,11 +22,6 @@
     "lastPlayedOn": "2026-11-14"
   },
   "substitutions": [
-    {
-      "sourceId": 1,
-      "field": "game",
-      "value": "Historic room #001 — name unknown"
-    },
     {
       "sourceId": 2,
       "field": "game",
@@ -41,11 +36,6 @@
       "sourceId": 4,
       "field": "game",
       "value": "Historic room #004 — name unknown"
-    },
-    {
-      "sourceId": 5,
-      "field": "game",
-      "value": "Historic room #005 — name unknown"
     },
     {
       "sourceId": 6,
@@ -74,14 +64,14 @@
     }
   ],
   "artifacts": {
-    "csvSha256": "4fd3aaaf65d82a9a9fff39720f6bb72fda7f1337770e22083cb96e4e254d5e28"
+    "csvSha256": "ba93fdcc45920d2be60fecfb708106639528c75721bf2419892cf68c03d8cb33"
   },
   "rows": [
     {
       "sourceId": 1,
       "location": "Bournemouth",
       "venue": "The Cyantist",
-      "game": "Historic room #001 — name unknown"
+      "game": "The Lab"
     },
     {
       "sourceId": 2,
@@ -105,7 +95,7 @@
       "sourceId": 5,
       "location": "Southampton",
       "venue": "The Cyantist",
-      "game": "Historic room #005 — name unknown"
+      "game": "The Cube"
     },
     {
       "sourceId": 6,
